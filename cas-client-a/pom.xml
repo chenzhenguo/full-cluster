@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>full-pro-cluster</groupId>
+		<artifactId>full-cluster</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>cas-client-a</artifactId>
+	<packaging>war</packaging>
+	<name>cas-client-a Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+
+	<profiles>
+		<profile>
+			<id>jdk-1.7</id>
+			<!-- 另外一种激活方式 -->
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<jdk>1.7</jdk>
+			</activation>
+			<properties>
+				<maven.compiler.source>1.7</maven.compiler.source>
+				<maven.compiler.target>1.7</maven.compiler.target>
+				<maven.compiler.compilerVersion>1.7</maven.compiler.compilerVersion>
+			</properties>
+		</profile>
+	</profiles>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.jasig.cas.client</groupId>
+			<artifactId>cas-client-core</artifactId>
+			<version>3.4.1</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>casclient1</finalName>
+	</build>
+
+</project>
