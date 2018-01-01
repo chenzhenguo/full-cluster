@@ -3,13 +3,6 @@ package com.hhcf.learn.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.DateFormat;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
@@ -19,10 +12,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  * @author zhaotf
  * @date 2017年12月31日 下午2:50:19
  */
-@Document(indexName = "jdbc-hm-article-mg-", type = "article")
+//@Document(indexName = "jdbc-hm-article-mg-", type = "article")
 public class Article implements Serializable {
 	private static final long serialVersionUID = -7343979092937219653L;
-	@Id
+//	@Id
 	private Long id;
 	/** 标题 */
 	private String title;
@@ -32,8 +25,8 @@ public class Article implements Serializable {
 	private String content;
 	/** 发表时间 */
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyyMMdd'T'HHmmss.SSS'Z'")
-	@Field(type = FieldType.Date, format = DateFormat.basic_date_time, index = true)
-	@CreatedDate
+//	@Field(type = FieldType.Date, format = DateFormat.basic_date_time, index = true)
+//	@CreatedDate
 	private Date postTime;
 	/** 点击率 */
 	private Long clickCount;

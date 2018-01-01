@@ -16,9 +16,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(locations = { "classpath:spring-mvc.xml", "classpath:spring-mvc-mybaits.xml" })
 public class BaseJunitTest {
 
-	@Test
-	public void testM1() {
-		System.out.println("aaaaaaa");
-	}
+//	@Test
+//	public void testM1() {
+//		System.out.println("aaaaaaa");
+//	}
 
 }

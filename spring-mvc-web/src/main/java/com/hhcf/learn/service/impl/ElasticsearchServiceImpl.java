@@ -1,30 +1,7 @@
 package com.hhcf.learn.service.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
-import org.apache.commons.lang.StringUtils;
-import org.elasticsearch.action.search.SearchRequestBuilder;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.action.search.SearchType;
-import org.elasticsearch.client.Client;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.QueryStringQueryBuilder;
-import org.elasticsearch.index.query.TermsQueryBuilder;
-import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.sort.SortOrder;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
-import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
-import org.springframework.data.elasticsearch.repository.support.SimpleElasticsearchRepository;
 import org.springframework.stereotype.Service;
 
-import com.hhcf.learn.dao.ArticleSearchRepository;
 import com.hhcf.learn.entity.Article;
 import com.hhcf.learn.service.ElasticsearchService;
 
@@ -45,8 +22,10 @@ public class ElasticsearchServiceImpl implements ElasticsearchService {
 	// private Client client;
 	// @Autowired
 	// private SimpleElasticsearchRepository simpleElasticsearchRepository;
-	@Autowired
-	private ArticleSearchRepository articleSearchRepository;
+//	@Autowired
+//	private ArticleSearchRepository articleSearchRepository;
+//	@Autowired
+//	private SimpleElasticsearchRepository simpleElasticsearchRepository;
 
 	@Override
 	public Object findIndex(String param) {
@@ -55,9 +34,12 @@ public class ElasticsearchServiceImpl implements ElasticsearchService {
 		ar.setAbstracts("aaaaaaaaaaaaaaaaaaaaa");
 		ar.setContent("cccccccccccccc");
 		ar.setTitle("bbbbbbbbbbbbbbbbbb");
-		articleSearchRepository.save(ar);
+//		articleSearchRepository.save(ar);
+//		simpleElasticsearchRepository.save(ar);
 		return null;
 	}
+
+	
 
 	// /** 查询 id */
 	// public List<String> queryId(String type, String[] fields, String content,
