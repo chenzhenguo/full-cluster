@@ -18,11 +18,16 @@ import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Requests;
+import org.elasticsearch.common.geo.GeoPoint;
+import org.elasticsearch.common.geo.ShapeRelation;
+import org.elasticsearch.common.geo.builders.ShapeBuilder;
 import org.elasticsearch.common.unit.DistanceUnit;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.GeoBoundingBoxQueryBuilder;
 import org.elasticsearch.index.query.GeoDistanceQueryBuilder;
+import org.elasticsearch.index.query.GeoShapeQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
@@ -41,12 +46,45 @@ import com.hhcf.learn.model.ESUserModel;
  * @Author: zhaotf
  * @Since:2018年1月2日 下午3:44:11
  * @see {@linkplain http://blog.csdn.net/luosai19910103/article/details/53729783}
+ * @see {@linkplain https://www.cnblogs.com/wenbronk/p/6524337.html}
  */
 public class ESGeoTransportClientUtils extends BaseJunitTest {
 	private String indexName = "map-attractions";
 	private String indexType = "posi";
 
-	// 获取附近的人
+	
+	@Test
+	@Deprecated
+    public void testGeoShapeQuery1() {
+        GeoShapeQueryBuilder queryBuilder = QueryBuilders.geoShapeQuery("location", "uPhLkNcPQSmVuoJDkMUCkQ",indexType)
+//        		.geoShapeQuery(
+//                "model.location",     // field
+//                "AVqxrMyikOe4Yke4p_Wx", // id of document
+//                "catchModel", ShapeRelation.WITHIN)    // type, relation
+            .indexedShapeIndex(indexName)    // name of index
+            .indexedShapePath("location");    // filed specified as path
+        SearchResponse response = transportClient.prepareSearch(indexName).setTypes(indexType)
+                .setQuery(queryBuilder).execute().actionGet();
+        String string = response.getHits().getHits().toString();
+        System.out.println(string);
+    }
+	
+	/**
+	 * 使用 BoundingBoxQuery进行查询,落入指定的矩形，左上点/右下点
+	 */
+	@Test
+	public void testGeoBoundingBoxQuery() {
+		GeoBoundingBoxQueryBuilder queryBuilder = QueryBuilders.geoBoundingBoxQuery("location")
+				.setCorners(new GeoPoint(40.059552, 116.177752), new GeoPoint(39.791302, 116.693451));
+		SearchResponse searchResponse = transportClient.prepareSearch(indexName).setTypes(indexType)
+				.setQuery(queryBuilder).get();
+		System.out.println(searchResponse);
+		System.err.println(searchResponse.getHits().totalHits);
+	}
+
+	/**
+	 * 获取附近的人, geo_distance 查询 发现文档geo-points内指定的中心点的距离。
+	 */
 	@Test
 	public void testGetNearbyPeople() {
 		double lat = 40.812679;// 纬度latitude
@@ -56,7 +94,7 @@ public class ESGeoTransportClientUtils extends BaseJunitTest {
 		// lon, lat位于谦的坐标，查询距离于谦1米到1000米
 		// FilterBuilder builder = geoDistanceRangeFilter("location").point(lon,
 		// lat).from("1m").to("100m").optimizeBbox("memory").geoDistance(GeoDistance.PLANE);
-		GeoDistanceQueryBuilder location1 = QueryBuilders.geoDistanceQuery("location").point(lat, lon).distance(100,
+		GeoDistanceQueryBuilder location1 = QueryBuilders.geoDistanceQuery("location").point(lat, lon).distance(110,
 				DistanceUnit.METERS);
 		srb.setPostFilter(location1);
 		// 获取距离多少公里 这个才是获取点与点之间的距离的
@@ -70,8 +108,7 @@ public class ESGeoTransportClientUtils extends BaseJunitTest {
 
 		SearchHits hits = searchResponse.getHits();
 		SearchHit[] searchHists = hits.getHits();
-		// 搜索耗时
-		Float usetime = searchResponse.getTook().getMillis() / 1000f;
+		Float usetime = searchResponse.getTook().getMillis() / 1000f; // 搜索耗时
 		System.out.println("于谦附近的人(" + hits.getTotalHits() + "个)，耗时(" + usetime + "秒)：");
 		for (SearchHit hit : searchHists) {
 			String name = (String) hit.getSourceAsMap().get("name");
