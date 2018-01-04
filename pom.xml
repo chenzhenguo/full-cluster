@@ -23,5 +23,6 @@
 		<module>cas-client-b</module>
 		<module>cas-client-c</module>
     <module>spring-mvc-web</module>
+    <module>spring-mvc-es</module>
   </modules>
 </project>

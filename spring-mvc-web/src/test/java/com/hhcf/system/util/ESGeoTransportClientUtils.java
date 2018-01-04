@@ -17,16 +17,17 @@ import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Requests;
+import org.elasticsearch.common.geo.GeoDistance;
 import org.elasticsearch.common.geo.GeoPoint;
-import org.elasticsearch.common.geo.ShapeRelation;
-import org.elasticsearch.common.geo.builders.ShapeBuilder;
 import org.elasticsearch.common.unit.DistanceUnit;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.GeoBoundingBoxQueryBuilder;
 import org.elasticsearch.index.query.GeoDistanceQueryBuilder;
+import org.elasticsearch.index.query.GeoPolygonQueryBuilder;
 import org.elasticsearch.index.query.GeoShapeQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
@@ -52,23 +53,22 @@ public class ESGeoTransportClientUtils extends BaseJunitTest {
 	private String indexName = "map-attractions";
 	private String indexType = "posi";
 
-	
 	@Test
 	@Deprecated
-    public void testGeoShapeQuery1() {
-        GeoShapeQueryBuilder queryBuilder = QueryBuilders.geoShapeQuery("location", "uPhLkNcPQSmVuoJDkMUCkQ",indexType)
-//        		.geoShapeQuery(
-//                "model.location",     // field
-//                "AVqxrMyikOe4Yke4p_Wx", // id of document
-//                "catchModel", ShapeRelation.WITHIN)    // type, relation
-            .indexedShapeIndex(indexName)    // name of index
-            .indexedShapePath("location");    // filed specified as path
-        SearchResponse response = transportClient.prepareSearch(indexName).setTypes(indexType)
-                .setQuery(queryBuilder).execute().actionGet();
-        String string = response.getHits().getHits().toString();
-        System.out.println(string);
-    }
-	
+	public void testGeoShapeQuery1() {
+		GeoShapeQueryBuilder queryBuilder = QueryBuilders.geoShapeQuery("location", "uPhLkNcPQSmVuoJDkMUCkQ", indexType)
+				// .geoShapeQuery(
+				// "model.location", // field
+				// "AVqxrMyikOe4Yke4p_Wx", // id of document
+				// "catchModel", ShapeRelation.WITHIN) // type, relation
+				.indexedShapeIndex(indexName) // name of index
+				.indexedShapePath("location"); // filed specified as path
+		SearchResponse response = transportClient.prepareSearch(indexName).setTypes(indexType).setQuery(queryBuilder)
+				.execute().actionGet();
+		String string = response.getHits().getHits().toString();
+		System.out.println(string);
+	}
+
 	/**
 	 * 使用 BoundingBoxQuery进行查询,落入指定的矩形，左上点/右下点
 	 */
@@ -83,6 +83,35 @@ public class ESGeoTransportClientUtils extends BaseJunitTest {
 	}
 
 	/**
+	 * distance query 查询
+	 */
+	@Test
+	public void testDistanceQuery() {
+		double lat = 40.812679;// 纬度latitude
+		double lon = 117.278338;// 经度longitude
+		SearchRequestBuilder srb = transportClient.prepareSearch(indexName).setTypes(indexType).setFrom(0).setSize(10);
+		GeoDistanceQueryBuilder queryBuilder = QueryBuilders.geoDistanceQuery("location").point(lat, lon)
+				.distance(20, DistanceUnit.KILOMETERS).geoDistance(GeoDistance.ARC);
+		// 距离计算用
+		srb.setPostFilter(queryBuilder).addSort(
+				SortBuilders.geoDistanceSort("location", lat, lon).unit(DistanceUnit.KILOMETERS).order(SortOrder.ASC));
+
+		SearchResponse response = srb.execute().actionGet();
+		System.out.println(response.getHits().totalHits + "," + response);
+		SearchHit[] hits = response.getHits().getHits();
+		for (SearchHit hit : hits) {
+
+			// 获取距离值，并保留两位小数点
+			BigDecimal geoDis = new BigDecimal((Double) hit.getSortValues()[0]);
+			Map<String, Object> hitMap = hit.getSourceAsMap();
+			hitMap.put("geoDistance", geoDis.setScale(2, BigDecimal.ROUND_HALF_DOWN));
+
+			System.out.println("附近的人:" + hit.getSourceAsString() + ",距离:" + hit.getSourceAsMap().get("geoDistance")
+					+ DistanceUnit.KILOMETERS.toString());
+		}
+	}
+
+	/**
 	 * 获取附近的人, geo_distance 查询 发现文档geo-points内指定的中心点的距离。
 	 */
 	@Test
@@ -92,24 +121,18 @@ public class ESGeoTransportClientUtils extends BaseJunitTest {
 		SearchRequestBuilder srb = this.transportClient.prepareSearch(indexName).setTypes(indexType);
 		srb.setFrom(0).setSize(10);// 1000人
 		// lon, lat位于谦的坐标，查询距离于谦1米到1000米
-		// FilterBuilder builder = geoDistanceRangeFilter("location").point(lon,
-		// lat).from("1m").to("100m").optimizeBbox("memory").geoDistance(GeoDistance.PLANE);
-		GeoDistanceQueryBuilder location1 = QueryBuilders.geoDistanceQuery("location").point(lat, lon).distance(110,
-				DistanceUnit.METERS);
-		srb.setPostFilter(location1);
+		GeoDistanceQueryBuilder location1 = QueryBuilders.geoDistanceQuery("location").point(lat, lon)
+				.distance(110, DistanceUnit.METERS).geoDistance(GeoDistance.ARC);
 		// 获取距离多少公里 这个才是获取点与点之间的距离的
 		GeoDistanceSortBuilder sort = SortBuilders.geoDistanceSort("location", lat, lon);
-		sort.unit(DistanceUnit.METERS);
-		sort.order(SortOrder.ASC);
-		sort.point(lat, lon);
-		srb.addSort(sort);
+		srb.setPostFilter(location1).addSort(sort.unit(DistanceUnit.METERS).order(SortOrder.ASC).point(lat, lon));
 
 		SearchResponse searchResponse = srb.execute().actionGet();
 
-		SearchHits hits = searchResponse.getHits();
-		SearchHit[] searchHists = hits.getHits();
 		Float usetime = searchResponse.getTook().getMillis() / 1000f; // 搜索耗时
+		SearchHits hits = searchResponse.getHits();
 		System.out.println("于谦附近的人(" + hits.getTotalHits() + "个)，耗时(" + usetime + "秒)：");
+		SearchHit[] searchHists = hits.getHits();
 		for (SearchHit hit : searchHists) {
 			String name = (String) hit.getSourceAsMap().get("name");
 			List<Double> location = (List<Double>) hit.getSourceAsMap().get("location");
@@ -121,7 +144,44 @@ public class ESGeoTransportClientUtils extends BaseJunitTest {
 			System.out.println(name + "的坐标：" + location + "他距离于谦" + hit.getSourceAsMap().get("geoDistance")
 					+ DistanceUnit.METERS.toString());
 		}
+	}
 
+	/**
+	 * 环形查询
+	 */
+	@Test
+	public void testDistanceRangeQuery() {
+		// FilterBuilders.
+		// GeoDistanceRangeQueryBuilder queryBuilder =
+		// QueryBuilders.geoDistanceRangeQuery("location")
+		// .point(40, 116.5) // 中心点
+		// .from("20km") // 内环
+		// .to("25km") //外环
+		// .includeLower(true) // 包含上届
+		// .includeUpper(true) // 包含下届
+		// .optimizeBbox("memory") // 边界框
+		// .geoDistance(GeoDistance.SLOPPY_ARC);
+		// SearchResponse response = client.prepareSearch("test")
+		// .setSearchType(SearchType.DFS_QUERY_AND_FETCH)
+		// .setQuery(queryBuilder).execute().actionGet();
+		// System.out.println(response);
+		// System.out.println(response.getHits().totalHits());
+	}
+
+	/**
+	 * 多边形查询
+	 */
+	@Test
+	public void testPolygonQuery() {
+		List<GeoPoint> points = new ArrayList<>();
+		points.add(new GeoPoint(40.057785, 116.391621));
+		points.add(new GeoPoint(39.867547, 116.272613));
+		points.add(new GeoPoint(39.852925, 116.517527));
+		GeoPolygonQueryBuilder queryBuilder = QueryBuilders.geoPolygonQuery("location", points);
+		SearchResponse response = transportClient.prepareSearch(indexName).setTypes(indexType).setQuery(queryBuilder)
+				.setSize(10).get();
+		System.out.println(response);
+		System.out.println(response.getHits().totalHits);
 	}
 
 	// 添加数据
