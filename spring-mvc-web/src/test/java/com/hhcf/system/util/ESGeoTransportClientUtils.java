@@ -21,6 +21,7 @@ import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Requests;
 import org.elasticsearch.common.geo.GeoDistance;
 import org.elasticsearch.common.geo.GeoPoint;
+import org.elasticsearch.common.text.Text;
 import org.elasticsearch.common.unit.DistanceUnit;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
@@ -29,9 +30,12 @@ import org.elasticsearch.index.query.GeoBoundingBoxQueryBuilder;
 import org.elasticsearch.index.query.GeoDistanceQueryBuilder;
 import org.elasticsearch.index.query.GeoPolygonQueryBuilder;
 import org.elasticsearch.index.query.GeoShapeQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.sort.GeoDistanceSortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
@@ -52,6 +56,52 @@ import com.hhcf.learn.model.ESUserModel;
 public class ESGeoTransportClientUtils extends BaseJunitTest {
 	private String indexName = "map-attractions";
 	private String indexType = "posi";
+
+	/**
+	 * 多字段查询方法
+	 */
+	@Test
+	public void testmutil() {
+		// QueryStringQueryBuilder.parseInnerQueryBuilder(parser)
+		// QueryStringQueryBuilder queryBuilder = new
+		// QueryStringQueryBuilder(key);
+		// queryBuilder.analyzer("ik_smart");
+		// queryBuilder.field("title").field("content");
+		// searchRequestBuilder.setQuery(queryBuilder);
+	}
+
+	/**
+	 * ES高亮查询
+	 * 
+	 * @see http://blog.csdn.net/napoay/article/details/53910646
+	 */
+	@Test
+	public void testHighlighter() {
+		QueryBuilder matchQuery = QueryBuilders.matchQuery("title", "编程");
+		HighlightBuilder hiBuilder = new HighlightBuilder();
+		hiBuilder.preTags("<h2>");
+		hiBuilder.postTags("</h2>");
+		hiBuilder.field("title");
+		// 搜索数据
+		SearchResponse response = transportClient.prepareSearch("blog").setTypes("article").setQuery(matchQuery)
+				.highlighter(hiBuilder).execute().actionGet();
+		// 获取查询结果集
+		SearchHits searchHits = response.getHits();
+		System.out.println("共搜到:" + searchHits.getTotalHits() + "条结果!");
+		// 遍历结果
+		for (SearchHit hit : searchHits) {
+			System.out.println("String方式打印文档搜索内容:");
+			System.out.println(hit.getSourceAsString());
+			System.out.println("Map方式打印高亮内容");
+			System.out.println(hit.getHighlightFields());
+
+			System.out.println("遍历高亮集合，打印高亮片段:");
+			Text[] text = hit.getHighlightFields().get("title").getFragments();
+			for (Text str : text) {
+				System.out.println(str.string());
+			}
+		}
+	}
 
 	@Test
 	@Deprecated
