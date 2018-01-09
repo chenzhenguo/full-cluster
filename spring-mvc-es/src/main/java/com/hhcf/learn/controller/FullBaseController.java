@@ -39,13 +39,13 @@ public class FullBaseController {
 	/**
 	 * 
 	 * 
-	 * @see http://127.0.0.1:8080/spring-mvc-web/fullBase/getModelData.do
+	 * @see http://127.0.0.1:8080/spring-mvc-es/fullBase/getModelData.do
 	 */
 	@ResponseBody
 	@RequestMapping("/getModelData")
 	public Object getModelData(HttpServletRequest request, String city, String code) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("cityname", "springMVC跨域处理");
+		map.put("cityname", "springMVC跨域处理热部署处理");
 		map.put("code", code + 66);
 		logger.info("后台处理:" + JSON.toJSONString(map));
 		return map;
