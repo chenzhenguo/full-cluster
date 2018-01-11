@@ -29,6 +29,7 @@
 		<!-- 工作流 -->
 		<activiti.version>5.11</activiti.version>
 		<mybatis.version>3.1.1</mybatis.version>
+		<rocketmq.version>3.5.8</rocketmq.version>
 
 		<!-- 辅助依赖包 -->
 		<cglib.version>2.2</cglib.version>
@@ -203,12 +204,6 @@
 			<version>${spring.version}</version>
 			<scope>test</scope>
 		</dependency>
-
-		<!-- SPRING end -->
-
-
-
-		<!-- spring orm -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
@@ -219,6 +214,24 @@
 			<artifactId>spring-jdbc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+
+		<!-- SPRING end -->
+
+		<!-- rocketMQ start -->
+		<dependency>
+		    <groupId>com.alibaba.rocketmq</groupId>
+		    <artifactId>rocketmq-client</artifactId>
+		    <version>${rocketmq.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.alibaba.rocketmq</groupId>
+		    <artifactId>rocketmq-common</artifactId>
+		    <version>${rocketmq.version}</version>
+		</dependency>
+		
+		<!-- rocketMQ end   -->
+
+
 		<dependency>
 			<groupId>commons-net</groupId>
 			<artifactId>commons-net</artifactId>
