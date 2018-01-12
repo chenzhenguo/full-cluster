@@ -29,7 +29,7 @@ public class FullBaseController {
 	static Logger logger = LoggerFactory.getLogger(FullBaseController.class);
 
 	/**
-	 * @see http://127.0.0.1:8080/spring-mvc-client-first/fullBase/initModel.do
+	 * @see http://127.0.0.1:8080/spring-mvc-server-first/fullBase/initModel.do
 	 */
 	@RequestMapping(value = "/initModel")
 	public String initModel(HttpServletRequest request) {
@@ -39,7 +39,7 @@ public class FullBaseController {
 	/**
 	 * 
 	 * 
-	 * @see http://127.0.0.1:8080/spring-mvc-client-first/fullBase/getModelData.do
+	 * @see http://127.0.0.1:8080/spring-mvc-server-first/fullBase/getModelData.do
 	 */
 	@ResponseBody
 	@RequestMapping("/getModelData")
