@@ -22,7 +22,11 @@
 		<module>cas-client-a</module>
 		<module>cas-client-b</module>
 		<module>cas-client-c</module>
-    <module>spring-mvc-web</module>
-    <module>spring-mvc-es</module>
+		<module>spring-mvc-web</module>
+		<module>spring-mvc-es</module>
+		<module>spring-mvc-client-second</module>
+		<module>spring-mvc-server-first</module>
+		<module>spring-mvc-server-second</module>
+    <module>spring-mvc-client-first</module>
   </modules>
 </project>
