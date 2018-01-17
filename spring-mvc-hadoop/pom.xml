@@ -13,6 +13,76 @@
 	<name>spring-mvc-hadoop Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
+
+	<repositories>
+		<repository>
+			<id>mvn</id>
+			<name>mvn Repository</name>
+			<url>http://mvnrepository.com</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>outof</id>
+			<name>outof Repository</name>
+			<url>http://maven.outofmemory.cn/</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>central</id>
+			<name>Central Repository</name>
+			<url>http://repo.maven.apache.org/maven2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>spy</id>
+			<name>Spy Repository</name>
+			<url>http://files.couchbase.com/maven2/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>xerces</id>
+			<name>xerces</name>
+			<url>https://xerces.apache.org/xerces2-j/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>proxool</id>
+			<name>proxool</name>
+			<url>http://proxool.cvs.sourceforge.net/viewvc/proxool/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>oschinaMavenThirdparty</id>
+			<name>oschinaMavenThirdparty</name>
+			<url>http://maven.oschina.net/content/repositories/thirdparty/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>osc</id>
+			<name>oschina</name>
+			<url>http://maven.oschina.net/content/groups/public/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
@@ -95,7 +165,14 @@
 	</properties>
 
 	<dependencies>
-
+		<dependency>
+			<groupId>jdk.tools</groupId>
+			<artifactId>jdk.tools</artifactId>
+			<version>${java.version}</version>
+			<scope>system</scope>
+			<systemPath>${JAVA_HOME}/lib/tools.jar</systemPath>
+		</dependency>
+		
 		<!-- hadoop-start -->
 		<dependency>
 			<groupId>org.apache.hadoop</groupId>
@@ -113,7 +190,34 @@
 			<artifactId>hadoop-hdfs</artifactId>
 			<version>${hadoop.version}</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase -->
+<dependency>
+    <groupId>org.apache.hbase</groupId>
+    <artifactId>hbase</artifactId>
+    <version>1.2.6</version>
+    <type>pom</type>
+</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase-server -->
+<dependency>
+    <groupId>org.apache.hbase</groupId>
+    <artifactId>hbase-server</artifactId>
+    <version>1.2.6</version>
+</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase-common -->
+<dependency>
+    <groupId>org.apache.hbase</groupId>
+    <artifactId>hbase-common</artifactId>
+    <version>1.2.6</version>
+</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase-client -->
+<dependency>
+    <groupId>org.apache.hbase</groupId>
+    <artifactId>hbase-client</artifactId>
+    <version>1.2.6</version>
+</dependency>
+		
 		<!-- hadoop-end -->
+
 		<!-- SPRING 依赖包start -->
 		<!-- spring mvc -->
 		<dependency>
@@ -175,8 +279,6 @@
 		</dependency>
 
 		<!-- SPRING end -->
-
-
 
 		<!-- spring orm -->
 		<dependency>
