@@ -50,8 +50,8 @@ import com.hhcf.learn.model.ESUserModel;
  * @see {@linkplain https://www.cnblogs.com/wenbronk/p/6524337.html}
  */
 public class ESGeoTransportClientUtils extends BaseJunitTest {
-	private String indexName = "map-attractions";
-	private String indexType = "posi";
+	private String indexName = "local-map-attractions-1";
+	private String indexType = "maps";
 
 	@Test
 	@Deprecated
@@ -149,6 +149,7 @@ public class ESGeoTransportClientUtils extends BaseJunitTest {
 	/**
 	 * 环形查询
 	 */
+	@Deprecated
 	@Test
 	public void testDistanceRangeQuery() {
 		double lat = 40.812679;// 纬度latitude
@@ -159,7 +160,7 @@ public class ESGeoTransportClientUtils extends BaseJunitTest {
 				.includeUpper(true) // 包含下届
 				.geoDistance(GeoDistance.SLOPPY_ARC);
 		SearchResponse response = transportClient.prepareSearch(indexName).setTypes(indexType)
-//				.setSearchType(SearchType.DFS_QUERY_AND_FETCH)
+				// .setSearchType(SearchType.DFS_QUERY_AND_FETCH)
 				.setQuery(gdrqb).execute().actionGet();
 		System.out.println(response);
 		System.out.println(response.getHits().totalHits());
@@ -187,7 +188,7 @@ public class ESGeoTransportClientUtils extends BaseJunitTest {
 		List<String> cityList = new ArrayList<String>();
 		double lat = 39.929986;// 纬度latitude
 		double lon = 116.395645;// 经度longitude
-		for (int i = 101001; i < 101500; i++) {
+		for (int i = 102000; i < 105000; i++) {
 			double max = 0.00001;
 			double min = 0.000001;
 			Random random = new Random();
@@ -205,9 +206,9 @@ public class ESGeoTransportClientUtils extends BaseJunitTest {
 		// 创建索引库
 		List<IndexRequest> requests = new ArrayList<IndexRequest>();
 		for (String text : cityList) {
-			IndexRequestBuilder builder = transportClient.prepareIndex(indexName, indexType);
-			builder = builder.setSource(text, XContentType.JSON);
-			requests.add(builder.request());
+			// IndexRequestBuilder builder =
+			// transportClient.prepareIndex(indexName, indexType);
+			requests.add(transportClient.prepareIndex(indexName, indexType).setSource(text).request());
 			System.out.println("aa:" + cityList.indexOf(text) + "," + text);
 		}
 
@@ -219,8 +220,9 @@ public class ESGeoTransportClientUtils extends BaseJunitTest {
 
 		BulkResponse bulkResponse = bulkRequest.execute().actionGet();
 		if (bulkResponse.hasFailures()) {
-			System.out.println("批量创建索引错误！");
+			System.err.println("批量创建索引错误！");
 		}
+		System.out.println("批量创建索引数量:" + bulkRequest.numberOfActions());
 		// return bulkRequest.numberOfActions();
 	}
 
@@ -242,8 +244,6 @@ public class ESGeoTransportClientUtils extends BaseJunitTest {
 	// 创建索引
 	@Test
 	public void createIndex() throws Exception {
-		String indexName = "map-attractions";
-		String indexType = "posi";
 		// 创建Mapping
 		XContentBuilder mapping = createMapping(indexType);
 		System.out.println("mapping:" + mapping.string());
@@ -263,6 +263,7 @@ public class ESGeoTransportClientUtils extends BaseJunitTest {
 	public XContentBuilder createMapping(String indexType) throws Exception {
 		XContentBuilder mapping = XContentFactory.jsonBuilder().startObject() // 索引库名（类似数据库中的表）
 				.startObject(indexType).startObject("properties")// ID
+				.startObject("@timestamp").field("type", "date").endObject() // 日间戳
 				.startObject("id").field("type", "long").endObject() // 姓名
 				.startObject("name").field("type", "text").endObject() // 位置
 				.startObject("location").field("type", "geo_point").endObject().endObject().endObject().endObject();

@@ -28,7 +28,7 @@ public class BaseJunitTest {
 
 	@Before
 	public void initClient() throws UnknownHostException {
-		Settings settings = Settings.builder().put("cluster.name", "my-application").put("client.transport.sniff", true).build();
+		Settings settings = Settings.builder().put("cluster.name", "ztf-application").put("client.transport.sniff", true).build();
 		PreBuiltTransportClient preBuiltTransportClient = new PreBuiltTransportClient(settings);
 		transportClient = preBuiltTransportClient
 				.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"), 9300));
