@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="spring-mvc-client-second:war exploded">
+    <output-path>$PROJECT_DIR$/spring-mvc-client-second/target/spring-mvc-client-second</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="spring-mvc-client-second" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/spring-mvc-client-second/target/spring-mvc-client-second/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="spring-mvc-client-second/web/Web" />
+    </root>
+  </artifact>
+</component>

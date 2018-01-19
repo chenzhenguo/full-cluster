@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/cas-client-a/cas-client-a.iml" filepath="$PROJECT_DIR$/cas-client-a/cas-client-a.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cas-client-b/cas-client-b.iml" filepath="$PROJECT_DIR$/cas-client-b/cas-client-b.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cas-client-c/cas-client-c.iml" filepath="$PROJECT_DIR$/cas-client-c/cas-client-c.iml" />
+      <module fileurl="file://$PROJECT_DIR$/full-cluster.iml" filepath="$PROJECT_DIR$/full-cluster.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-mvc-client-first/spring-mvc-client-first.iml" filepath="$PROJECT_DIR$/spring-mvc-client-first/spring-mvc-client-first.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-mvc-client-second/spring-mvc-client-second.iml" filepath="$PROJECT_DIR$/spring-mvc-client-second/spring-mvc-client-second.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-mvc-es/spring-mvc-es.iml" filepath="$PROJECT_DIR$/spring-mvc-es/spring-mvc-es.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-mvc-hadoop/spring-mvc-hadoop.iml" filepath="$PROJECT_DIR$/spring-mvc-hadoop/spring-mvc-hadoop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-mvc-server-first/spring-mvc-server-first.iml" filepath="$PROJECT_DIR$/spring-mvc-server-first/spring-mvc-server-first.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-mvc-server-second/spring-mvc-server-second.iml" filepath="$PROJECT_DIR$/spring-mvc-server-second/spring-mvc-server-second.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-mvc-web/spring-mvc-web.iml" filepath="$PROJECT_DIR$/spring-mvc-web/spring-mvc-web.iml" />
+    </modules>
+  </component>
+</project>

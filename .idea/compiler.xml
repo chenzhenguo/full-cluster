@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="cas-client-a" />
+        <module name="cas-client-b" />
+        <module name="cas-client-c" />
+        <module name="spring-mvc-client-first" />
+        <module name="spring-mvc-client-second" />
+        <module name="spring-mvc-es" />
+        <module name="spring-mvc-hadoop" />
+        <module name="spring-mvc-server-first" />
+        <module name="spring-mvc-server-second" />
+        <module name="spring-mvc-web" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="cas-client-a" target="1.7" />
+      <module name="cas-client-b" target="1.7" />
+      <module name="cas-client-c" target="1.7" />
+      <module name="full-cluster" target="1.5" />
+      <module name="spring-mvc-client-first" target="1.8" />
+      <module name="spring-mvc-client-second" target="1.5" />
+      <module name="spring-mvc-es" target="1.8" />
+      <module name="spring-mvc-hadoop" target="1.8" />
+      <module name="spring-mvc-server-first" target="1.8" />
+      <module name="spring-mvc-server-second" target="1.5" />
+      <module name="spring-mvc-web" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
