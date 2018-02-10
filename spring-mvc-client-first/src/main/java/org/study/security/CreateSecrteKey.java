@@ -3,6 +3,7 @@ package org.study.security;
 import java.security.Key;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.SecureRandom;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.HashMap;
@@ -59,7 +60,9 @@ public class CreateSecrteKey {
 	public static Map<String, Object> initKey() throws Exception {
 		// 获得对象 KeyPairGenerator 参数 RSA 1024个字节
 		KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(KEY_ALGORITHM);
-		keyPairGen.initialize(1024);
+		SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG" );
+        secureRandom.setSeed("zhaotf".getBytes());
+		keyPairGen.initialize(1024, secureRandom);
 		// 通过对象 KeyPairGenerator 获取对象KeyPair
 		KeyPair keyPair = keyPairGen.generateKeyPair();
 
