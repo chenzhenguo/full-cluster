@@ -1,9 +1,9 @@
 package org.study.security;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
 import java.io.FileInputStream;
-import java.io.ObjectInputStream;
+import java.io.InputStreamReader;
 import java.security.Key;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -34,21 +34,31 @@ import org.springframework.util.Base64Utils;
 public class RSAUtils {
 
 	public static void main(String[] args) throws Exception {
-		Map<String, Object> keys = genKeyPair();
+		// Map<String, Object> keys = genKeyPair();
 
 		String input = "明文|||hello world|||";
-		String pubKey = getPublicKey(keys);
+		// String pubKey = getPublicKey(keys);
+		RSAUtils ut = new RSAUtils();
+		String pubKey = ut.readKey(PUBLIC_KEY_PATH);
 		System.out.println("公钥:" + pubKey);
-		String privKey = getPrivateKey(keys);
+		// String privKey = getPrivateKey(keys);
+		String privKey = ut.readKey(PRIVATE_KEY_PATH);
 		System.out.println("私钥:" + privKey);
 
 		// 加密
 		byte[] cipherText = encryptByPublicKey(input.getBytes(), pubKey);// 公钥加密
+		String str1 = sign(cipherText, privKey);// 私钥签名
+		// String str1 = sign(cipherText, pubKey);// 公钥签名,报错
+		System.out.println("私钥签名:" + str1);
 		String str2 = Base64.getEncoder().encodeToString(cipherText);
 		System.out.println("加密后: " + str2);
 		// 解密
 		byte[] text1 = decryptByPrivateKey(Base64.getDecoder().decode(str2), privKey);// 私钥解密
 		System.out.println("解密后: " + new String(text1));
+
+		// System.out.println("签名校验:" + verify(Base64.getDecoder().decode(str2),
+		// privKey, str1));// 私钥验签，报错
+		System.out.println("签名校验:" + verify(Base64.getDecoder().decode(str2), pubKey, str1));// 公钥验签
 	}
 
 	/**
@@ -56,10 +66,10 @@ public class RSAUtils {
 	 */
 	public static final String KEY_ALGORITHM = "RSA";
 
-	// /**
-	// * 签名算法
-	// */
-	// public static final String SIGNATURE_ALGORITHM = "MD5withRSA";
+	/**
+	 * 签名算法
+	 */
+	public static final String SIGNATURE_ALGORITHM = "MD5withRSA";
 
 	/**
 	 * 获取公钥的key
@@ -88,9 +98,10 @@ public class RSAUtils {
 	 */
 	public String readKey(String path) throws Exception {
 		FileInputStream fis = new FileInputStream(path);
-		DataInputStream bis = new DataInputStream(fis);
-		String key = bis.readUTF();
+		BufferedReader bis = new BufferedReader(new InputStreamReader(fis));
+		String key = bis.readLine();
 		bis.close();
+		fis.close();
 		return key;
 	}
 
@@ -125,7 +136,7 @@ public class RSAUtils {
 		PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
 		KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
 		PrivateKey privateK = keyFactory.generatePrivate(pkcs8KeySpec);
-		Signature signature = Signature.getInstance(KEY_ALGORITHM);
+		Signature signature = Signature.getInstance(SIGNATURE_ALGORITHM);
 		signature.initSign(privateK);
 		signature.update(data);
 		return Base64Utils.encodeToString(signature.sign());
@@ -146,7 +157,7 @@ public class RSAUtils {
 		X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
 		KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
 		PublicKey publicK = keyFactory.generatePublic(keySpec);
-		Signature signature = Signature.getInstance(KEY_ALGORITHM);
+		Signature signature = Signature.getInstance(SIGNATURE_ALGORITHM);
 		signature.initVerify(publicK);
 		signature.update(data);
 		return signature.verify(Base64Utils.decodeFromString(sign));
