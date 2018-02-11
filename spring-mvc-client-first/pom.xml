@@ -16,31 +16,23 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
+				<hadoop.version>2.8.2</hadoop.version>
+		<hbase.version>1.2.6</hbase.version>
+		<spark.version>2.1.2</spark.version>
+		<rocketmq.version>3.5.8</rocketmq.version>
 		<spring.version>4.3.10.RELEASE</spring.version>
 		<elasticsearch.version>6.1.1</elasticsearch.version>
 		<jest.searchbox.version>5.3.2</jest.searchbox.version>
 		<slf4j.version>1.5.10</slf4j.version>
 		<slf4j-log4j12.version>1.6.1</slf4j-log4j12.version>
 		<junit.version>4.12</junit.version>
-		<org.aspectj-version>1.6.9</org.aspectj-version>
 		<!-- 主要依赖库的版本定义 -->
 		<spring.version>4.3.10.RELEASE</spring.version>
 		<hibernate.version>4.1.0.Final</hibernate.version>
-		<!-- 工作流 -->
-		<activiti.version>5.11</activiti.version>
+		<mysql.version>5.1.27</mysql.version>
 		<mybatis.version>3.1.1</mybatis.version>
-		<rocketmq.version>3.5.8</rocketmq.version>
-
-		<!-- 辅助依赖包 -->
-		<cglib.version>2.2</cglib.version>
-		<aspectj.version>1.6.9</aspectj.version>
-		<jodd.version>3.3.7</jodd.version>
-		<javassist.version>3.15.0-GA</javassist.version>
-		<ant.version>1.6.5</ant.version>
-		<spring-jpa.versoin>2.0.8</spring-jpa.versoin>
 		<mybatis-spring.version>1.1.1</mybatis-spring.version>
 
-		<!-- 工具包 -->
 		<jackson.version>1.9.13</jackson.version>
 		<jackson2.version>2.1.2</jackson2.version>
 		<json-lib.version>2.4</json-lib.version>
@@ -48,7 +40,6 @@
 		<dom4j.version>1.6.1</dom4j.version>
 		<slf4j.version>1.7.21</slf4j.version>
 		<log4j.version>1.2.16</log4j.version>
-		<classmate.version>0.5.4</classmate.version>
 		<commons-beanutils.version>1.7.0</commons-beanutils.version>
 		<commons-collections.version>3.2.1</commons-collections.version>
 		<commons-chain.version>1.2</commons-chain.version>
@@ -61,69 +52,127 @@
 		<commons-logging.version>1.0.4</commons-logging.version>
 		<commons-logging-api.version>1.1</commons-logging-api.version>
 		<commons-validator.version>1.3.1</commons-validator.version>
-		<commons-email.version>1.2</commons-email.version>
-		<ehcache.version>2.4.3</ehcache.version>
-		<freemarker.version>2.3.19</freemarker.version>
-		<hamcrest.version>1.3</hamcrest.version>
-		<hibernate-validator.version>4.2.0.Final</hibernate-validator.version>
-		<poi.version>3.9</poi.version>
-		<antlr.version>3.3</antlr.version>
-		<juh.version>3.2.1</juh.version>
-		<unoil.version>3.2.1</unoil.version>
-		<xwork-core.version>2.1.6</xwork-core.version>
-		<jurt.version>3.2.1</jurt.version>
-		<jacksonframework.version>1.84</jacksonframework.version>
-
-		<!-- 数据库组件包start -->
+		<commons-email.version>1.4</commons-email.version>
 		<commons-pool.version>1.6</commons-pool.version>
 		<commons-dbcp.version>1.4</commons-dbcp.version>
-		<druid.version>0.2.9</druid.version>
-		<mysql.version>5.1.27</mysql.version>
-		<jtds.version>1.2.4</jtds.version>
-		<postgresql.version>9.1-903.jdbc4</postgresql.version>
-
-		<!-- 测试依赖包 -->
-		<mockito.version>1.9.5</mockito.version>
-		<powermock.version>1.5</powermock.version>
-		<selenium.version>2.28.0</selenium.version>
-		<jetty.version>7.6.8.v20121106</jetty.version>
-		<poi-ooxml-schemas.version>3.9</poi-ooxml-schemas.version>
-		<poi-ooxml.version>3.9</poi-ooxml.version>
-		<poi-scratchpad.version>3.9</poi-scratchpad.version>
-		<!-- Plugin的属性定义 -->
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jdk.version>1.7</jdk.version>
-		<codegenerate.version>3.4.3</codegenerate.version>
-		<minidao.version>1.3.3</minidao.version>
-		<CKFinder.version>2.4</CKFinder.version>
-		<jodconverter.version>3.0-beta-4</jodconverter.version>
-		<pinyin4j.version>2.5.0</pinyin4j.version>
-		<ojdbc14.version>10.2.0.4.0</ojdbc14.version>
-		<org.quartz.version>1.6.2</org.quartz.version>
-		<activation.version>1.1.1</activation.version>
-		<aopalliance.version>1.0</aopalliance.version>
-		<xstream.version>1.4.4</xstream.version>
-		<!--poi 工具类 -->
-		<easypoi.version>2.1.1</easypoi.version>
+		<druid.version>1.1.0</druid.version>
+		<classmate.version>1.3.3</classmate.version>
+		<jtds.version>1.3.1</jtds.version>
 	</properties>
 
 
 	<dependencies>
-	
-	<!-- https://mvnrepository.com/artifact/com.alibaba.rocketmq/rocketmq-client -->
+
+		<!-- https://mvnrepository.com/artifact/com.alibaba.rocketmq/rocketmq-client -->
+		<dependency>
+			<groupId>com.alibaba.rocketmq</groupId>
+			<artifactId>rocketmq-client</artifactId>
+			<version>3.5.9</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.alibaba.rocketmq/rocketmq-common -->
+		<dependency>
+			<groupId>com.alibaba.rocketmq</groupId>
+			<artifactId>rocketmq-common</artifactId>
+			<version>3.5.9</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase-common 
 <dependency>
-    <groupId>com.alibaba.rocketmq</groupId>
-    <artifactId>rocketmq-client</artifactId>
-    <version>3.5.9</version>
+    <groupId>org.apache.hbase</groupId>
+    <artifactId>hbase-common</artifactId>
+    <version>1.2.6</version>
 </dependency>
-	<!-- https://mvnrepository.com/artifact/com.alibaba.rocketmq/rocketmq-common -->
+		-->
+		<!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase-server 
 <dependency>
-    <groupId>com.alibaba.rocketmq</groupId>
-    <artifactId>rocketmq-common</artifactId>
-    <version>3.5.9</version>
+    <groupId>org.apache.hbase</groupId>
+    <artifactId>hbase-server</artifactId>
+    <version>1.2.6</version>
 </dependency>
-	
-	
+		-->
+		<!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase-client 
+<dependency>
+    <groupId>org.apache.hbase</groupId>
+    <artifactId>hbase-client</artifactId>
+    <version>1.2.6</version>
+</dependency>
+		-->
+		<!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase-protocol
+<dependency>
+    <groupId>org.apache.hbase</groupId>
+    <artifactId>hbase-protocol</artifactId>
+    <version>1.2.6</version>
+</dependency>
+		 -->
+		
+		<!-- hadoop-start -->
+		<dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-common</artifactId>
+			<version>${hadoop.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-client</artifactId>
+			<version>${hadoop.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-hdfs</artifactId>
+			<version>${hadoop.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.hbase</groupId>
+			<artifactId>hbase</artifactId>
+			<version>${hbase.version}</version>
+			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.hbase</groupId>
+			<artifactId>hbase-server</artifactId>
+			<version>${hbase.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.hbase</groupId>
+			<artifactId>hbase-common</artifactId>
+			<version>${hbase.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.hbase</groupId>
+			<artifactId>hbase-client</artifactId>
+			<version>${hbase.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-core_2.11</artifactId>
+			<version>${spark.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-sql_2.11</artifactId>
+			<version>${spark.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-hive_2.11</artifactId>
+			<version>${spark.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-streaming_2.11</artifactId>
+			<version>${spark.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-mllib_2.11</artifactId>
+			<version>${spark.version}</version>
+		</dependency>
+
+		<!-- hadoop-end -->
+		
+		
+
+
 		<!-- elasticsearch start -->
 		<!-- <dependency> <groupId>io.searchbox</groupId> <artifactId>jest</artifactId> 
 			<version>${jest.searchbox.version}</version> </dependency> -->
@@ -340,8 +389,6 @@
 			<artifactId>jackson-annotations</artifactId>
 			<version>2.8.9</version>
 		</dependency>
-
-
 		<dependency>
 			<groupId>net.sf.json-lib</groupId>
 			<artifactId>json-lib</artifactId>
@@ -390,57 +437,6 @@
 			<version>${classmate.version}</version>
 		</dependency>
 
-
-		<dependency>
-			<groupId>net.sf.json-lib</groupId>
-			<artifactId>json-lib</artifactId>
-			<version>${json-lib.version}</version>
-			<classifier>jdk15</classifier>
-		</dependency>
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
-			<version>${fastjson-lib.version}</version>
-		</dependency>
-		<!-- JSON end -->
-		<!-- dom4j -->
-		<dependency>
-			<groupId>dom4j</groupId>
-			<artifactId>dom4j</artifactId>
-			<version>${dom4j.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>xml-apis</groupId>
-					<artifactId>xml-apis</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<!-- slf4j -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
-		<!-- log4j -->
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>${log4j.version}</version>
-		</dependency>
-		<!-- classmate -->
-		<dependency>
-			<groupId>com.fasterxml</groupId>
-			<artifactId>classmate</artifactId>
-			<version>${classmate.version}</version>
-		</dependency>
-
-
-		<!-- commons-beanutils -->
 		<dependency>
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
@@ -452,7 +448,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!-- commons-collections -->
 		<dependency>
 			<groupId>commons-collections</groupId>
 			<artifactId>commons-collections</artifactId>
