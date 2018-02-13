@@ -23,18 +23,18 @@ public class RowCountObserver extends BaseRegionObserver {
 		env = (RegionCoprocessorEnvironment) e;
 		RegionServerServices rss = env.getRegionServerServices();
 		Region m_region = env.getRegion();
-		zNodePath = zNodePath + m_region.getRegionNameAsString();
-		zkw = rss.getZooKeeper();
-		myrowcount = 0; // count;
-		try {
-			if (ZKUtil.checkExists(zkw, zNodePath) == -1) {
-				LOG.error("LIULIUMI: cannot find the znode");
-				ZKUtil.createWithParents(zkw, zNodePath);
-				LOG.info("znode path is : " + zNodePath);
-			}
-		} catch (Exception ee) {
-			LOG.error("LIULIUMI: create znode fail");
-		}
+		// zNodePath = zNodePath + m_region.getRegionNameAsString();
+		// zkw = rss.getZooKeeper();
+		// myrowcount = 0; // count;
+		// try {
+		// if (ZKUtil.checkExists(zkw, zNodePath) == -1) {
+		// LOG.error("LIULIUMI: cannot find the znode");
+		// ZKUtil.createWithParents(zkw, zNodePath);
+		// LOG.info("znode path is : " + zNodePath);
+		// }
+		// } catch (Exception ee) {
+		// LOG.error("LIULIUMI: create znode fail");
+		// }
 	}
 
 	@Override
