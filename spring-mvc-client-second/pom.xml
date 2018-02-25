@@ -314,9 +314,9 @@
 			<version>${commons-validator.version}</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-pool2</artifactId>
-		    <version>2.4.2</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-pool2</artifactId>
+			<version>2.4.2</version>
 		</dependency>
 
 		<dependency>
@@ -351,7 +351,12 @@
 			<artifactId>jedis</artifactId>
 			<version>2.9.0</version>
 		</dependency>
-
+		<!-- https://mvnrepository.com/artifact/de.javakaffee/kryo-serializers -->
+		<dependency>
+			<groupId>de.javakaffee</groupId>
+			<artifactId>kryo-serializers</artifactId>
+			<version>0.38</version>
+		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>

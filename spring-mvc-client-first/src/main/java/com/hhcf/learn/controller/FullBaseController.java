@@ -1,11 +1,13 @@
 package com.hhcf.learn.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +34,14 @@ public class FullBaseController {
 	 * @see http://127.0.0.1:8080/spring-mvc-client-first/fullBase/initModel.do
 	 */
 	@RequestMapping(value = "/initModel")
-	public String initModel(HttpServletRequest request) {
+	public String initModel(HttpServletRequest request,HttpServletResponse response) {
+		try {
+			request.getInputStream();
+			response.getOutputStream();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "initModel";
 	}
 
