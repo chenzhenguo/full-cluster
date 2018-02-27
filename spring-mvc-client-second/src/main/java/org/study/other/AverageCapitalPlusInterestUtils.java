@@ -72,7 +72,7 @@ public class AverageCapitalPlusInterestUtils {
 	 *            总借款额（贷款本金）
 	 * @param yearRate
 	 *            年利率
-	 * @param month
+	 * @param totalmonth
 	 *            还款总月数
 	 * @return 每月偿还本金
 	 */
@@ -137,7 +137,7 @@ public class AverageCapitalPlusInterestUtils {
 	 */
 	public static void main(String[] args) {
 		double invest = 20000; // 本金
-		int month = 12;
+		int month = 12;//期数
 		double yearRate = 0.15; // 年利率
 		double perMonthPrincipalInterest = getPerMonthPrincipalInterest(invest, yearRate, month);
 		System.out.println("等额本息---每月还款本息：" + perMonthPrincipalInterest);
