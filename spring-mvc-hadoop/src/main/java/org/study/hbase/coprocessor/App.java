@@ -80,6 +80,7 @@ public class App extends BaseRegionObserver {
 	@Override
 	public void postPut(final ObserverContext<RegionCoprocessorEnvironment> e, final Put put, final WALEdit edit,
 			final Durability durability) throws IOException {
+//		aa_order_0001
 		String rowkey = Bytes.toString(put.getRow());
 		HTableInterface table = pool.getTable(SOURCE_TABLE);
 		String pre = rowkey.substring(0, 2);
