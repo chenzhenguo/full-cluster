@@ -225,8 +225,46 @@
 			<artifactId>spark-mllib_2.11</artifactId>
 			<version>${spark.version}</version>
 		</dependency>
-
 		<!-- hadoop-end -->
+
+		<!-- elasticsearch-start -->
+		<dependency>
+		    <groupId>org.elasticsearch</groupId>
+		    <artifactId>elasticsearch</artifactId>
+		    <version>6.1.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.elasticsearch.client/transport -->
+<dependency>
+    <groupId>org.elasticsearch.client</groupId>
+    <artifactId>transport</artifactId>
+    <version>6.1.1</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.elasticsearch.client/elasticsearch-rest-client -->
+<dependency>
+    <groupId>org.elasticsearch.client</groupId>
+    <artifactId>elasticsearch-rest-client</artifactId>
+    <version>6.1.1</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.elasticsearch.client/elasticsearch-rest-high-level-client -->
+<dependency>
+    <groupId>org.elasticsearch.client</groupId>
+    <artifactId>elasticsearch-rest-high-level-client</artifactId>
+    <version>6.1.1</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.elasticsearch.plugin/transport-netty4-client -->
+<dependency>
+    <groupId>org.elasticsearch.plugin</groupId>
+    <artifactId>transport-netty4-client</artifactId>
+    <version>6.1.1</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.elasticsearch.plugin/reindex-client -->
+<dependency>
+    <groupId>org.elasticsearch.plugin</groupId>
+    <artifactId>reindex-client</artifactId>
+    <version>6.1.1</version>
+</dependency>
+		
+		<!-- elasticsearch-end   -->
 
 		<!-- SPRING 依赖包start -->
 		<!-- spring mvc -->
@@ -563,6 +601,11 @@
 			<groupId>commons-validator</groupId>
 			<artifactId>commons-validator</artifactId>
 			<version>${commons-validator.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>commons-logging</groupId>
+		    <artifactId>commons-logging</artifactId>
+		    <version>1.2</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core 
