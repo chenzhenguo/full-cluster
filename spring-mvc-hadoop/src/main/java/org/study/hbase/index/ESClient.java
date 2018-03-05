@@ -56,10 +56,15 @@ public class ESClient {
 	 * init ES client
 	 */
 	@SuppressWarnings("resource")
-	public static void initEsClient() throws Exception {
-		Settings settings = Settings.builder().put("cluster.name", ESClient.clusterName).build();
-		client = new PreBuiltTransportClient(settings)
-				.addTransportAddress(new TransportAddress(InetAddress.getByName(ESClient.nodeHost), ESClient.nodePort));
+	public static void initEsClient() {
+		try {
+			Settings settings = Settings.builder().put("cluster.name", ESClient.clusterName).build();
+			client = new PreBuiltTransportClient(settings).addTransportAddress(
+					new TransportAddress(InetAddress.getByName(ESClient.nodeHost), ESClient.nodePort));
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 	}
 
 	/**
