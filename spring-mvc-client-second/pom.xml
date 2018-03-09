@@ -25,7 +25,7 @@
 		<junit.version>4.12</junit.version>
 		<!-- 主要依赖库的版本定义 -->
 		<spring.version>4.3.10.RELEASE</spring.version>
-		<hibernate.version>4.1.0.Final</hibernate.version>
+		<hibernate.version>4.2.3.Final</hibernate.version>
 		<mysql.version>5.1.27</mysql.version>
 		<mybatis.version>3.1.1</mybatis.version>
 		<mybatis-spring.version>1.1.1</mybatis-spring.version>
@@ -125,6 +125,30 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<!-- SPRING end -->
+		
+		<!-- hibernate-start -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-ehcache</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-proxool</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.common</groupId>
+			<artifactId>hibernate-commons-annotations</artifactId>
+			<version>4.0.2.Final</version>
+		</dependency>
+		<!-- hibernate-end   -->
+		
 
 		<!-- WEB begin -->
 		<!-- web依赖包 -->
@@ -363,6 +387,24 @@
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 		</dependency>
+
+<!-- storm-start -->
+<dependency>
+    <groupId>org.apache.storm</groupId>
+    <artifactId>storm-core</artifactId>
+    <version>1.1.2</version>
+    <scope>provided</scope>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.apache.storm/storm-kafka -->
+<dependency>
+    <groupId>org.apache.storm</groupId>
+    <artifactId>storm-kafka</artifactId>
+    <version>1.1.2</version>
+</dependency>
+
+
+<!-- storm-end   -->
+
 
 	</dependencies>
 
