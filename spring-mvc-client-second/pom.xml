@@ -9,7 +9,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>spring-mvc-client-second</artifactId>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>spring-mvc-client-second Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
@@ -125,7 +125,7 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<!-- SPRING end -->
-		
+
 		<!-- hibernate-start -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -147,8 +147,8 @@
 			<artifactId>hibernate-commons-annotations</artifactId>
 			<version>4.0.2.Final</version>
 		</dependency>
-		<!-- hibernate-end   -->
-		
+		<!-- hibernate-end -->
+
 
 		<!-- WEB begin -->
 		<!-- web依赖包 -->
@@ -388,22 +388,44 @@
 			<version>4.12</version>
 		</dependency>
 
-<!-- storm-start -->
-<dependency>
-    <groupId>org.apache.storm</groupId>
-    <artifactId>storm-core</artifactId>
-    <version>1.1.2</version>
-    <scope>provided</scope>
-</dependency>
-<!-- https://mvnrepository.com/artifact/org.apache.storm/storm-kafka -->
-<dependency>
-    <groupId>org.apache.storm</groupId>
-    <artifactId>storm-kafka</artifactId>
-    <version>1.1.2</version>
-</dependency>
+		<!-- storm-start -->
+		<dependency>
+			<groupId>org.apache.storm</groupId>
+			<artifactId>storm-core</artifactId>
+			<version>1.1.2</version>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>log4j-over-slf4j</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.storm</groupId>
+			<artifactId>storm-kafka</artifactId>
+			<version>1.1.2</version>
+		</dependency>
 
+		<!-- storm-end -->
 
-<!-- storm-end   -->
+		<!-- kafka-start -->
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka_2.11</artifactId>
+			<version>0.11.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-clients</artifactId>
+			<version>0.11.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-streams</artifactId>
+			<version>0.11.0.0</version>
+		</dependency>
+		<!-- kafka-end -->
 
 
 	</dependencies>
@@ -419,6 +441,20 @@
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<archive>
+						<manifest>
+							<mainClass>org.study.storm.helloworld.ExclamationTopology</mainClass>
+						</manifest>
+					</archive>
 				</configuration>
 			</plugin>
 		</plugins>
