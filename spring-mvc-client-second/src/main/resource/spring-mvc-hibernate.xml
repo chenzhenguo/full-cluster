@@ -20,26 +20,28 @@
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 	<!-- 真心帮api -->
-	<context:component-scan base-package="com.zhenxinbang.api.*">
+	<context:component-scan base-package="com.hhcf.backend.*">
 		<context:exclude-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 
-	<!-- 引入数据源属性文件
-	<context:property-placeholder location="classpath:dbconfig.properties" />
-	 -->
-	<bean id="propertyConfigurer1" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="order" value="1"/>  
-        <property name="ignoreResourceNotFound" value="true"/>  
-        <property name="ignoreUnresolvablePlaceholders" value="true" />
-        <property name="location" value="file:/etc/tomcat5/api/dbconfig-bus.properties"/>      
+	<!-- 引入数据源属性文件 <context:property-placeholder location="classpath:dbconfig.properties" 
+		/> -->
+	<bean id="propertyConfigurer1"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="order" value="1" />
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="location"
+			value="file:/etc/tomcat5/api/dbconfig-bus.properties" />
 	</bean>
-    <bean id="propertyConfigurer2" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">    
-        <property name="order" value="2"/>  
-        <property name="ignoreUnresolvablePlaceholders" value="true" />  
-        <property name="location" value="classpath:dbconfig.properties"/>    
-    </bean>
-	
+	<bean id="propertyConfigurer2"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="order" value="2" />
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="location" value="classpath:dbconfig.properties" />
+	</bean>
+
 	<!-- 配置数据源1 -->
 	<bean name="dataSource_jeecg" class="com.alibaba.druid.pool.DruidDataSource"
 		init-method="init" destroy-method="close">
@@ -48,7 +50,7 @@
 		<property name="password" value="${jdbc.password.jeecg}" />
 		<!-- 初始化连接大小 -->
 		<property name="initialSize" value="0" />
-		<!-- 连接池最大使用连接数量 -->                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+		<!-- 连接池最大使用连接数量 -->
 		<property name="maxActive" value="20" />
 		<!-- 连接池最大空闲 -->
 		<property name="maxIdle" value="20" />
@@ -82,7 +84,7 @@
 		<property name="connectProperties">
 			<props>
 				<prop key="remarksReporting">true</prop>
-				
+
 			</props>
 		</property>
 	</bean>
@@ -121,7 +123,7 @@
 				<value>org.jeecgframework.web.cgreport.entity.*</value>
 			</list>
 		</property>
-		
+
 	</bean>
 
 
@@ -136,14 +138,14 @@
 	<bean id="namedParameterJdbcTemplate"
 		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
 		<constructor-arg ref="dataSource" />
-		
+
 	</bean>
 
 	<!-- 配置事物管理器，在*ServiceImpl里写@Transactional就可以启用事物管理 -->
 	<bean name="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory"></property>
-		
+
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager" />
 

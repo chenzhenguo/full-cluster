@@ -39,60 +39,60 @@ import org.apache.log4j.Logger;
 public class HttpClientUtils {
 
 	public static void main(String[] args) throws Exception {
-//		for (int i = 0; i < 3; i++) {
-			final CloseableHttpAsyncClient httpAsyncClient = getHttpClient();
+		// for (int i = 0; i < 3; i++) {
+		final CloseableHttpAsyncClient httpAsyncClient = getHttpClient();
 
-			doGet(httpAsyncClient, new FutureCallback<HttpResponse>() {
+		doGet(httpAsyncClient, new FutureCallback<HttpResponse>() {
 
-				/**
-				 * 请求完成后调用
-				 */
-				public void completed(final HttpResponse response) {
+			/**
+			 * 请求完成后调用
+			 */
+			public void completed(final HttpResponse response) {
+				try {
+					System.out.println(Thread.currentThread().getId() + ":completed->" + response.getStatusLine());
+					org.apache.http.client.utils.HttpClientUtils.closeQuietly(response);
+				} finally {
 					try {
-						System.out.println(Thread.currentThread().getId() + ":completed->" + response.getStatusLine());
-						org.apache.http.client.utils.HttpClientUtils.closeQuietly(response);
-					} finally {
-						try {
-							httpAsyncClient.close();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
+						httpAsyncClient.close();
+					} catch (IOException e) {
+						e.printStackTrace();
 					}
 				}
+			}
 
-				/**
-				 * 请求失败后调用
-				 */
-				public void failed(final Exception ex) {
+			/**
+			 * 请求失败后调用
+			 */
+			public void failed(final Exception ex) {
+				try {
+					System.out.println("->" + ex);
+				} finally {
 					try {
-						System.out.println("->" + ex);
-					} finally {
-						try {
-							httpAsyncClient.close();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
+						httpAsyncClient.close();
+					} catch (IOException e) {
+						e.printStackTrace();
 					}
 				}
+			}
 
-				/**
-				 * 请求取消后调用
-				 */
-				public void cancelled() {
+			/**
+			 * 请求取消后调用
+			 */
+			public void cancelled() {
+				try {
+					System.out.println(" cancelled");
+				} finally {
 					try {
-						System.out.println(" cancelled");
-					} finally {
-						try {
-							httpAsyncClient.close();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
+						httpAsyncClient.close();
+					} catch (IOException e) {
+						e.printStackTrace();
 					}
 				}
-			});
-//		}
+			}
+		});
+		// }
 
-//		Thread.sleep(5 * 1000);
+		// Thread.sleep(5 * 1000);
 		System.out.println("bbbbbbbbbbbbb");
 	}
 
@@ -105,7 +105,7 @@ public class HttpClientUtils {
 	/**
 	 * 初始化连接池，spring容器初始化进行
 	 */
-	// @PostConstruct
+	@PostConstruct
 	public void init() {
 		try {
 			sslcontext = SSLContexts.custom().build();
@@ -160,16 +160,17 @@ public class HttpClientUtils {
 
 	public static void doGet(CloseableHttpAsyncClient httpAsyncClient, FutureCallback<HttpResponse> callback)
 			throws Exception {
-//		String[] urisToGet = { "http://www.chinaso.com/", "http://www.so.com/", "http://www.qq.com/", };
+		// String[] urisToGet = { "http://www.chinaso.com/",
+		// "http://www.so.com/", "http://www.qq.com/", };
 
-//		for (final String uri : urisToGet) {
-			final HttpGet httpget = new HttpGet("http://www.chinaso.com/");
-			httpAsyncClient.execute(httpget, callback);
-			System.out.println("结束准备……" + "http://www.chinaso.com/");
-//		}
+		// for (final String uri : urisToGet) {
+		final HttpGet httpget = new HttpGet("http://www.chinaso.com/");
+		httpAsyncClient.execute(httpget, callback);
+		System.out.println("结束准备……" + "http://www.chinaso.com/");
+		// }
 		System.out.println("结束准备……");
 		System.out.println("结束");
-//		Thread.sleep(5 * 1000);
+		// Thread.sleep(5 * 1000);
 		// httpAsyncClient.close();
 		System.out.println("aaaaaaaaaaaaaaaaa");
 	}

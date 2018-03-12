@@ -63,48 +63,6 @@
 
 	<dependencies>
 
-		<!-- https://mvnrepository.com/artifact/com.alibaba.rocketmq/rocketmq-client -->
-		<dependency>
-			<groupId>com.alibaba.rocketmq</groupId>
-			<artifactId>rocketmq-client</artifactId>
-			<version>3.5.9</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.alibaba.rocketmq/rocketmq-common -->
-		<dependency>
-			<groupId>com.alibaba.rocketmq</groupId>
-			<artifactId>rocketmq-common</artifactId>
-			<version>3.5.9</version>
-		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase-common 
-<dependency>
-    <groupId>org.apache.hbase</groupId>
-    <artifactId>hbase-common</artifactId>
-    <version>1.2.6</version>
-</dependency>
-		-->
-		<!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase-server 
-<dependency>
-    <groupId>org.apache.hbase</groupId>
-    <artifactId>hbase-server</artifactId>
-    <version>1.2.6</version>
-</dependency>
-		-->
-		<!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase-client 
-<dependency>
-    <groupId>org.apache.hbase</groupId>
-    <artifactId>hbase-client</artifactId>
-    <version>1.2.6</version>
-</dependency>
-		-->
-		<!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase-protocol
-<dependency>
-    <groupId>org.apache.hbase</groupId>
-    <artifactId>hbase-protocol</artifactId>
-    <version>1.2.6</version>
-</dependency>
-		 -->
-		
 		<!-- hadoop-start -->
 		<dependency>
 			<groupId>org.apache.hadoop</groupId>
@@ -169,13 +127,8 @@
 		</dependency>
 
 		<!-- hadoop-end -->
-		
-		
-
 
 		<!-- elasticsearch start -->
-		<!-- <dependency> <groupId>io.searchbox</groupId> <artifactId>jest</artifactId> 
-			<version>${jest.searchbox.version}</version> </dependency> -->
 		<dependency>
 			<groupId>org.elasticsearch</groupId>
 			<artifactId>elasticsearch</artifactId>
@@ -291,11 +244,8 @@
 		<!-- rocketMQ end -->
 
 
-		<dependency>
-			<groupId>commons-net</groupId>
-			<artifactId>commons-net</artifactId>
-			<version>3.5</version>
-		</dependency>
+
+		<!-- 数据库相关依赖包-start -->
 		<!-- mybatis -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
@@ -307,8 +257,13 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>${mybatis-spring.version}</version>
 		</dependency>
+		<!-- 数据库相关依赖包-end -->
 
-		<!-- 数据库相关依赖包 -->
+		<dependency>
+			<groupId>commons-net</groupId>
+			<artifactId>commons-net</artifactId>
+			<version>3.5</version>
+		</dependency>
 		<dependency>
 			<groupId>commons-pool</groupId>
 			<artifactId>commons-pool</artifactId>
@@ -548,5 +503,22 @@
 			</plugin>
 		</plugins>
 	</build>
+
+
+	<!-- 指定maven编译方式为jdk1.7版本 -->
+	<profiles>
+		<profile>
+			<id>jdk-1.7</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<jdk>1.7</jdk>
+			</activation>
+			<properties>
+				<maven.compiler.source>1.7</maven.compiler.source>
+				<maven.compiler.target>1.7</maven.compiler.target>
+				<maven.compiler.compilerVersion>1.7</maven.compiler.compilerVersion>
+			</properties>
+		</profile>
+	</profiles>
 
 </project>
