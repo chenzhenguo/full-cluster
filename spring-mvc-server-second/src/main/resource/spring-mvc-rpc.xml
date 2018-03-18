@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/aop
+                        http://www.springframework.org/schema/aop/spring-aop.xsd
+                        http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx.xsd
+                        http://www.springframework.org/schema/mvc 
+                        http://www.springframework.org/schema/mvc/spring-mvc.xsd"
+	default-autowire="byName">
+
+	<context:component-scan base-package="org.study.rpc.sample.service"></context:component-scan>
+	<context:property-placeholder location="classpath:rpcconfig.properties" />
+
+	<!-- 配置服务注册组件 -->
+	<bean id="serviceRegistry" class="org.study.rpc.registry.service.ServiceRegistry">
+		<constructor-arg name="registryAddress" value="${registry.address}"></constructor-arg>
+	</bean>
+
+	<!-- 配置 RPC 服务器 -->
+	<bean id="rpcServer" class="org.study.rpc.service.RpcServer">
+		<constructor-arg name="serverAddress" value="${server.address}"></constructor-arg>
+		<constructor-arg name="serviceRegistry" ref="serviceRegistry"></constructor-arg>
+	</bean>
+
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
