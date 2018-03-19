@@ -52,17 +52,13 @@ public class RpcProxy {
 								+ JSON.toJSONString(method) + "|" + JSON.toJSONString(args));
 						String[] array = serverAddress.split(":");
 						System.out.println(
-								"rpc客户端InvocationHandler.invoke:" + serverAddress + "," + JSON.toJSONString(array));
+								"rpc客户端InvocationHandler.invoke-1:" + serverAddress + "," + JSON.toJSONString(array));
 
 						String host = array[0];
-						System.out.println("rpc客户端aaaaaaaaaaaaaa");
 						int port = Integer.parseInt(array[1]);
-						System.out.println("rpc客户端bbbbbbbbbbbbbb");
 
 						RpcClient client = new RpcClient(host, port); // 初始化RPC客户端
-						System.out.println("rpc客户端cccccccccccccc");
-						RpcResponse response = client.send(request); // 通过RPC客户端发送RPC请求并获取RPC响应
-						System.out.println("rpc客户端dddddddddddddd");
+						RpcResponse response = client.send1(request); // 通过RPC客户端发送RPC请求并获取RPC响应
 
 						if (response.getError() != null) {
 							response.getError().printStackTrace();

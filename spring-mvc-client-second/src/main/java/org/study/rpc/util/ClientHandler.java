@@ -16,7 +16,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<Object> {
 
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
-		System.out.println("rpc客户端channelRead0:" + msg.getClass().getName());
+		System.out.println("rpc客户端ClientHandler.channelRead0:" + msg.getClass().getName());
 	}
 
 	/**

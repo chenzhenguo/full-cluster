@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
 
+import com.alibaba.fastjson.JSON;
 import com.dyuproject.protostuff.LinkedBuffer;
 import com.dyuproject.protostuff.ProtostuffIOUtil;
 import com.dyuproject.protostuff.Schema;
@@ -29,7 +30,7 @@ public class SerializationUtil {
 
 	@SuppressWarnings("unchecked")
 	private static <T> Schema<T> getSchema(Class<T> cls) {
-		System.out.println("rpc客户端getSchema:"+cls.getName());
+		System.out.println("rpc客户端getSchema:"+cls.getName()+","+JSON.toJSONString(cls));
 		Schema<T> schema = (Schema<T>) cachedSchema.get(cls);
 		if (schema == null) {
 			schema = RuntimeSchema.createFrom(cls);

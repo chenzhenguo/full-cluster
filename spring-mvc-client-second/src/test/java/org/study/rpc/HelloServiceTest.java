@@ -2,7 +2,6 @@ package org.study.rpc;
 
 import java.util.Map;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,9 @@ public class HelloServiceTest {
 	@Test
 	public void helloTest() {
 		HelloService helloService = rpcProxy.create(HelloService.class);
+		System.out.println("rpc-客户端HelloServiceTest:111111");
 		Map<String, Object> result = helloService.hello("World");
+		System.out.println("rpc-客户端HelloServiceTest:22222");
 		System.out.println("rpc-客户端HelloServiceTest:" + JSON.toJSONString(result));
 		// Assert.assertEquals("Hello! World", result);
 	}

@@ -1,4 +1,4 @@
-package org.study.rpc.service.impl;
+package org.study.rpc.sample.service.impl;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -19,6 +19,7 @@ public class HelloServiceImpl implements HelloService {
 
 	@Override
 	public Map<String, Object> hello(String name) {
+		System.out.println("RPC服务端-HelloServiceImpl.hello:" + name);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("code", "rpc-server-zookeeper" + Thread.currentThread().getId());
 		map.put("now-time", new Date());
@@ -27,7 +28,8 @@ public class HelloServiceImpl implements HelloService {
 	}
 
 	@Override
-	public Object sayHi(String string) {
+	public Object sayHi(String name) {
+		System.out.println("RPC服务端-HelloServiceImpl.sayHi:" + name);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("code", "rpc-server-local" + Thread.currentThread().getId());
 		map.put("now-time", new Date());

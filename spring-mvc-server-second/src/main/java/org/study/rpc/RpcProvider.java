@@ -1,7 +1,7 @@
 package org.study.rpc;
 
 import org.study.rpc.sample.service.HelloService;
-import org.study.rpc.service.impl.HelloServiceImpl;
+import org.study.rpc.sample.service.impl.HelloServiceImpl;
 
 /**
  * @Title: RpcProvider.java

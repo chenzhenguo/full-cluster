@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.study.rpc.medol.RpcRequest;
 import org.study.rpc.medol.RpcResponse;
 
+import com.alibaba.fastjson.JSON;
+
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -38,20 +40,23 @@ public class RpcHandler extends SimpleChannelInboundHandler<RpcRequest> {
 
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, RpcRequest request) throws Exception {
-		System.out.println("rpc服务端RpcHandler.channelRead0:" + request);
 		RpcResponse response = new RpcResponse();
 		response.setRequestId(request.getRequestId());
 		try {
+			System.out.println("rpc服务端RpcHandler.channelRead0:" + request);
 			Object result = handle(request);
+			System.out.println("rpc服务端RpcHandler.channelRead0,1:" + JSON.toJSONString(result));
 			response.setResult(result);
 		} catch (Throwable t) {
+			t.printStackTrace();
 			response.setError(t);
 		}
-		ctx.writeAndFlush(request).addListener(ChannelFutureListener.CLOSE);
+		ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
 	}
 
 	private Object handle(RpcRequest request) throws Throwable {
 		String className = request.getClassName();
+		LOGGER.info(className);;
 		Object serviceBean = handlerMap.get(className);
 
 		Class<?> serviceClass = serviceBean.getClass();

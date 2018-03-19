@@ -60,7 +60,8 @@ public class CreateSecrteKey {
 	public static Map<String, Object> initKey() throws Exception {
 		// 获得对象 KeyPairGenerator 参数 RSA 1024个字节
 		KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(KEY_ALGORITHM);
-		SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG" );
+//		SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
+		SecureRandom secureRandom = SecureRandom.getInstance("SHA1withRSA");
         secureRandom.setSeed("zhaotf".getBytes());
 		keyPairGen.initialize(1024, secureRandom);
 		// 通过对象 KeyPairGenerator 获取对象KeyPair
@@ -80,10 +81,11 @@ public class CreateSecrteKey {
 		Map<String, Object> keyMap;
 		try {
 			keyMap = initKey();
-			String publicKey = getPublicKey(keyMap);
-			System.out.println(publicKey);
-			String privateKey = getPrivateKey(keyMap);
-			System.out.println(privateKey);
+			System.out.println(keyMap.toString());
+//			String publicKey = getPublicKey(keyMap);
+//			System.out.println(publicKey);
+//			String privateKey = getPrivateKey(keyMap);
+//			System.out.println(privateKey);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

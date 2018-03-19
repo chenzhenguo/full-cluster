@@ -60,6 +60,7 @@ public class ServiceDiscovery {
 			zk = new ZooKeeper(registryAddress, ZK_SESSION_TIMEOUT, new Watcher() {
 				@Override
 				public void process(WatchedEvent event) {
+					LOGGER.info("connectServer:"+event.getState()+","+(event.getState() == Event.KeeperState.SyncConnected));
 					if (event.getState() == Event.KeeperState.SyncConnected) {
 						latch.countDown();
 					}

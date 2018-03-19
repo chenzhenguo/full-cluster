@@ -1,5 +1,6 @@
 package org.study.rpc.service;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,8 +9,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.util.ReflectionUtils;
 import org.study.annotation.RpcService;
 import org.study.rpc.medol.RpcRequest;
 import org.study.rpc.medol.RpcResponse;
@@ -36,7 +43,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
  * @date 2018年3月18日 下午12:40:32
  * @see {@linkplain http://blog.csdn.net/jek123456/article/details/53200613}
  */
-public class RpcServer implements ApplicationContextAware, InitializingBean {
+public class RpcServer implements ApplicationContextAware, InitializingBean,BeanPostProcessor {
 	private static final Logger LOGGER = LoggerFactory.getLogger(RpcServer.class);
 	private String serverAddress;
 	private ServiceRegistry serviceRegistry;
@@ -93,12 +100,44 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
 	public void setApplicationContext(ApplicationContext ctx) throws BeansException {
 		// TODO Auto-generated method stub
 		Map<String, Object> serviceBeanMap = ctx.getBeansWithAnnotation(RpcService.class); // 获取所有带有RpcService注解的SpringBean
+		LOGGER.info("setApplicationContext:"+JSON.toJSONString(serviceBeanMap));
 		if (MapUtils.isNotEmpty(serviceBeanMap)) {
 			for (Object serviceBean : serviceBeanMap.values()) {
 				String interfaceName = serviceBean.getClass().getAnnotation(RpcService.class).value().getName();
+				LOGGER.info("setApplicationContext:"+interfaceName+","+serviceBean.getClass().getName());
 				handlerMap.put(interfaceName, serviceBean);
 			}
 		}
 	}
+
+	@Override
+	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+		LOGGER.info("postProcessBeforeInitialization:"+bean+","+beanName);
+		return bean;
+	}
+
+	@Override
+	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+		// TODO Auto-generated method stub  
+		
+//        Method[] methods = ReflectionUtils.getAllDeclaredMethods(bean.getClass());
+//        if (methods != null) {
+//            for (Method method : methods) {
+//            	RpcService rpcService = AnnotationUtils.findAnnotation(method, RpcService.class);
+//                // process
+//            }
+//        }
+        
+		LOGGER.info("postProcessAfterInitialization:"+bean+","+beanName);
+		RpcService rpcService = AnnotationUtils.findAnnotation(bean.getClass(), RpcService.class);
+		if(rpcService != null) {
+			handlerMap.put(bean.getClass().getName(), bean);
+		}
+		
+        return bean;
+	}
+
+
+
 
 }

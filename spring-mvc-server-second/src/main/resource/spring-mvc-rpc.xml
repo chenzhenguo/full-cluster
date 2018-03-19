@@ -28,7 +28,7 @@
 		<constructor-arg name="serverAddress" value="${server.address}"></constructor-arg>
 		<constructor-arg name="serviceRegistry" ref="serviceRegistry"></constructor-arg>
 	</bean>
-
+	
 </beans>
 
 
