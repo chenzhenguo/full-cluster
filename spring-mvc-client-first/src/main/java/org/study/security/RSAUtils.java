@@ -35,7 +35,7 @@ import org.springframework.util.Base64Utils;
 public class RSAUtils {
 
 	public static void main(String[] args) throws Exception {
-		// Map<String, Object> keys = genKeyPair();
+		 Map<String, Object> keys = genKeyPair();
 
 		String input = "明文|||hello world|||";
 		// String pubKey = getPublicKey(keys);
