@@ -22,11 +22,17 @@
 	<util:properties id="appConfig" location="classpath:application.properties"></util:properties>
 	
 	<!-- RabbitMQ连接配置 -->
-	<rabbit:connection-factory id="connectionFactory" host="${mq.host}" port="${mq.port}" username="${mq.username}" password="${mq.password}" />
+	<rabbit:connection-factory id="connectionFactory" host="${mq.host}" port="${mq.port}" username="zhaotf" password="123456" />
+	<rabbit:connection-factory id="ztfConnectionFactory" host="${mq.host}" port="${mq.port}" username="ztfadmin" password="123456" 
+		virtual-host="${mq.virtual.host}" />
 	<rabbit:admin connection-factory="connectionFactory" />
 
-	<!-- RabbitMQ Template -->
+	<!-- RabbitMQ Template, -->
+	<!-- 
 	<rabbit:template id="amqpTemplate" exchange="${mq.queue}_exchange" connection-factory="connectionFactory"></rabbit:template>
+	 -->
+	<rabbit:template id="amqpTemplate" connection-factory="connectionFactory"></rabbit:template>
+	<rabbit:template id="ztfAmqpTemplate" connection-factory="ztfConnectionFactory"></rabbit:template>
 
 	<!-- 交换机 -->
 	<!-- rabbit:top-exchange 标签的 name 属性就是在 RabbitMQ 服务器配置交换机的 name 值 -->
@@ -34,7 +40,7 @@
 	<!-- rabbit:binding 标签的 pattern 属性是在 RabbitMQ 服务器配置交换机与队列绑定时的 Routing key 值（路由） -->
 	<rabbit:topic-exchange name="${mq.queue}_exchange" durable="true" auto-delete="false">
 		<rabbit:bindings>
-			<rabbit:binding pattern="${mq.queue}_patt" queue="test_queue"></rabbit:binding>
+			<rabbit:binding pattern="${mq.queue}_patt" queue="test_queue" ></rabbit:binding>
 		</rabbit:bindings>
 	</rabbit:topic-exchange>
 

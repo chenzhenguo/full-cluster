@@ -14,10 +14,9 @@
 
 	<!-- 自动扫描controller包下的所有类，使其认为spring mvc的控制器 -->
 	<!-- 加载controller的时候,不加载service,因为此时事物并未生效,若此时加载了service,那么事物无法对service进行拦截 -->
-	<context:component-scan base-package="com.hhcf.*"
-		use-default-filters="true">
-		<context:exclude-filter type="annotation"
-			expression="org.springframework.stereotype.Service" />
+	
+	<context:component-scan base-package="com.hhcf.*" use-default-filters="true">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />
 	</context:component-scan>
 	<!-- 指定aop方式 -->
 	<aop:aspectj-autoproxy proxy-target-class="true" />

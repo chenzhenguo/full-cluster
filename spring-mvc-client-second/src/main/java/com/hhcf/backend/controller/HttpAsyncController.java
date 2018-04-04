@@ -21,7 +21,7 @@ import com.hhcf.backend.service.FullService;
  * @Since:2018年3月12日 下午2:06:48
  */
 @Controller
-@RequestMapping("/fullBase")
+@RequestMapping("/httpAsync")
 public class HttpAsyncController {
 	@Autowired
 	private FullService fullService;

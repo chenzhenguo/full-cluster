@@ -2,8 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:rabbit="http://www.springframework.org/schema/rabbit"
-	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:rabbit="http://www.springframework.org/schema/rabbit" xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
       http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -18,28 +17,31 @@
       http://www.springframework.org/schema/aop  
       http://www.springframework.org/schema/aop/spring-aop.xsd ">
 
-	<context:property-placeholder location="classpath:rpcconfig.properties" />
+	<context:property-placeholder location="classpath:application.properties" />
+	<util:properties id="appConfig" location="classpath:application.properties"></util:properties>
 
-	<!-- 连接配置 -->
-	<rabbit:connection-factory id="connectionFactory" host="${mq.host}" port="${mq.port}" username="${mq.username}" password="${mq.password}" />
-	<rabbit:admin connection-factory="connectionFactory"/>
-	
-	<!-- 声明一个队列 -->
-	<rabbit:queue id="test_queue" name="${mq.queue}_testQueue"></rabbit:queue>
-      
-    <!-- 消费者 -->
+	<!-- 连接配置 		 -->
+	<rabbit:connection-factory id="connectionFactory" host="127.0.0.1" port="5672" username="zhaotf" password="123456" />
+
+	<rabbit:connection-factory id="ztfConnectionFactory" host="127.0.0.1" port="5672" username="ztfadmin"
+		password="123456" virtual-host="${mq.virtual.host}" />
+	<rabbit:admin connection-factory="connectionFactory" />
+
+	<!-- 消费者 -->
 	<bean id="rabbitmqListener" class="com.hhcf.listener.RabbitmqListener"></bean>
 	<bean id="consumerService" class="com.hhcf.front.service.ConsumerService"></bean>
 
 	<!-- 配置监听 -->
 	<rabbit:listener-container connection-factory="connectionFactory" acknowledge="auto">
 		<!-- queues 监听队列，多个用逗号分隔ref 监听器 -->
-		<rabbit:listener queues="test_queue" ref="rabbitmqListener" />
+		<rabbit:listener queues="hmlcq" ref="rabbitmqListener" />
 	</rabbit:listener-container>
-	<rabbit:listener-container connection-factory="connectionFactory" acknowledge="auto">
-		<!-- queues 监听队列，多个用逗号分隔ref 监听器 -->
-		<rabbit:listener queues="test_queue" ref="consumerService" method="getMessage" />
-	</rabbit:listener-container>
+	<!-- queues 监听队列，多个用逗号分隔ref 监听器 <rabbit:listener-container connection-factory="ztfConnectionFactory" 
+		acknowledge="auto"> <rabbit:listener response-exchange="ztf-hh" queues="hmlc-msg" 
+		response-routing-key="hmlc.msg" ref="consumerService" method="getMessage" 
+		/> </rabbit:listener-container> -->
+
+
 
 </beans>
       

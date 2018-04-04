@@ -1,5 +1,8 @@
 package com.hhcf.backend.service.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.junit.Test;
@@ -23,13 +26,29 @@ public class RbmqProducerServiceImplTest extends LocalBaseTest {
 	 */
 	@Test
 	public void sendQueue() {
-		// 交换机key
-		String exchange_key = "abc";
-		// 队列key
-		String queue_key = "test_mq";
+		String exchange_key = "hhcf"; // 交换机key
+		String queue_key = "hmlcq"; // 队列key
 		// 内容
-		Object object = "aaaaa";
-		rbmqProducerService.sendQueue(exchange_key, queue_key, object);
+		String object = "aaaaa";
+		System.out.println("aaaaaaaaaaaaaaaaaa");
+		for (int i = 0; i < 100; i++) {
+			rbmqProducerService.sendQueue(exchange_key, queue_key, object + i);
+		}
+	}
+
+	/**
+	 * 向rabbitmq发送消息,topic模式
+	 */
+	@Test
+	public void sendTopicQueue() {
+		String exchangeKey = "ztf-hh"; // 交换机key
+		String routingKey = "hmlc.msg"; // 路由键
+		Map<String, Object> map = new HashMap<String, Object>();
+		for (int i = 0; i < 100; i++) {
+			map.put("code", System.currentTimeMillis());
+			map.put("name", "topic" + i);
+			rbmqProducerService.sendTopicQueue(exchangeKey, routingKey, map);
+		}
 	}
 
 }

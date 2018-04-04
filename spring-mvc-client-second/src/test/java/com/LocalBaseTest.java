@@ -24,8 +24,7 @@ import org.springframework.web.context.WebApplicationContext;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = { "classpath*:spring-mvc.xml", "classpath*:spring-mvc-hibernate.xml",
-		"classpath*:spring-mvc-rabbitmq.xml" })
+@ContextConfiguration(locations = { "classpath*:spring-mvc.xml", "classpath*:spring-mvc-hibernate.xml", "classpath*:spring-mvc-rabbitmq.xml" })
 @Transactional
 public class LocalBaseTest {
 	protected MockHttpServletRequest request;

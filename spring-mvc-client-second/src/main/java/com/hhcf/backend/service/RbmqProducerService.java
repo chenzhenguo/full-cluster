@@ -10,7 +10,7 @@ package com.hhcf.backend.service;
 public interface RbmqProducerService {
 
 	/**
-	 * 向rabbitmq发送消息
+	 * 向rabbitmq发送消息,dicret模式
 	 * 
 	 * @param exchange_key
 	 *            交换机key
@@ -20,5 +20,17 @@ public interface RbmqProducerService {
 	 *            内容
 	 */
 	public void sendQueue(String exchange_key, String queue_key, Object object);
+
+	/**
+	 * 向rabbitmq发送消息,topic模式
+	 * 
+	 * @param exchangeKey
+	 *            交换机key
+	 * @param routingKey
+	 *            路由键
+	 * @param object
+	 *            内容
+	 */
+	public void sendTopicQueue(String exchangeKey, String routingKey, Object object);
 
 }
