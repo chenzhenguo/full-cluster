@@ -18,34 +18,27 @@
       http://www.springframework.org/schema/aop  
       http://www.springframework.org/schema/aop/spring-aop.xsd ">
       
-	<context:property-placeholder location="classpath:application.properties"/>
-	<util:properties id="appConfig" location="classpath:application.properties"></util:properties>
-	
-	<!-- RabbitMQ连接配置 -->
-	<rabbit:connection-factory id="connectionFactory" host="${mq.host}" port="${mq.port}" username="zhaotf" password="123456" />
-	<rabbit:connection-factory id="ztfConnectionFactory" host="${mq.host}" port="${mq.port}" username="ztfadmin" password="123456" 
-		virtual-host="${mq.virtual.host}" />
-	<rabbit:admin connection-factory="connectionFactory" />
+	<!-- Message Consumer配置 -->
+    <rabbit:connection-factory id="connectionFactory" username="zxbadmin" password="123456"
+    	host="localhost" port="5672" virtual-host="/hh-zxb"/>
+    	
+    <!-- 声明一个 RabbitMQ Template -->	
+    <rabbit:template id="amqpTemplate" exchange="zxb-project-topic" connection-factory="connectionFactory"  />
 
-	<!-- RabbitMQ Template, -->
-	<!-- 
-	<rabbit:template id="amqpTemplate" exchange="${mq.queue}_exchange" connection-factory="connectionFactory"></rabbit:template>
+	<!-- 实例化queue方式
+    <rabbit:queue id="nzwz-project-queue" name="nzwz-project-queue" durable="true" auto-delete="false" exclusive="false"/>
+    <rabbit:queue id="nzwz-project-info" name="nzwz-project-info" durable="true" auto-delete="false" exclusive="false"/>
 	 -->
-	<rabbit:template id="amqpTemplate" connection-factory="connectionFactory"></rabbit:template>
-	<rabbit:template id="ztfAmqpTemplate" connection-factory="ztfConnectionFactory"></rabbit:template>
 
-	<!-- 交换机 -->
-	<!-- rabbit:top-exchange 标签的 name 属性就是在 RabbitMQ 服务器配置交换机的 name 值 -->
-	<!-- rabbit:binding 标签的 queue 属性是下面 <queue> 标签的 id 属性 -->
-	<!-- rabbit:binding 标签的 pattern 属性是在 RabbitMQ 服务器配置交换机与队列绑定时的 Routing key 值（路由） -->
-	<rabbit:topic-exchange name="${mq.queue}_exchange" durable="true" auto-delete="false">
-		<rabbit:bindings>
-			<rabbit:binding pattern="${mq.queue}_patt" queue="test_queue" ></rabbit:binding>
-		</rabbit:bindings>
-	</rabbit:topic-exchange>
+    <bean id="messageReceiver" class="com.hhcf.system.listener.ZxbRamqListener"></bean>
 
-	<!-- 声明一个队列 -->
-	<rabbit:queue id="test_queue" name="${mq.queue}_testQueue" durable="true" auto-delete="false" exclusive="false"></rabbit:queue>
+    <rabbit:listener-container connection-factory="connectionFactory">
+    	<!-- 实例化queue方式
+        <rabbit:listener queues="nzwz-project-queue" ref="messageReceiver"/>
+    	 -->
+    	 <rabbit:listener ref="messageReceiver" queue-names="nzwz-project-queue" />
+    	 <rabbit:listener ref="messageReceiver" queue-names="nzwz-project-info" method="onNzwzMessage" />
+    </rabbit:listener-container>
 
 
 </beans>

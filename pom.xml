@@ -29,5 +29,7 @@
 		<module>spring-mvc-server-second</module>
     <module>spring-mvc-client-first</module>
     <module>spring-mvc-hadoop</module>
+    <module>spring-mvc-client-three</module>
+    <module>spring-mvc-server-three</module>
   </modules>
 </project>

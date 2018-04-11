@@ -82,8 +82,8 @@ public class LocalRsaPubUtil {
 	 * @throws Exception
 	 */
 	public static PublicKey getPublicKey(String pubKey) throws Exception {
-		Base64.decode(arg0)
-		X509EncodedKeySpec spec = new X509EncodedKeySpec(keyBytes);
+//		Base64.decode(pubKey)
+		X509EncodedKeySpec spec = new X509EncodedKeySpec(pubKey.getBytes());
 		// KeyFactory kf = KeyFactory.getInstance("RSA");
 		KeyFactory kf = KeyFactory.getInstance("RSA", "BC");
 		return kf.generatePublic(spec);
