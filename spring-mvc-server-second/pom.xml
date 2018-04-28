@@ -510,21 +510,19 @@
 		<dependency>
 		    <groupId>org.springframework.amqp</groupId>
 		    <artifactId>spring-rabbit</artifactId>
-		    <version>1.6.0.RELEASE</version>
+		    <version>1.7.5.RELEASE</version>
 		</dependency>
 		<dependency>
 		    <groupId>org.springframework.amqp</groupId>
 		    <artifactId>spring-amqp</artifactId>
-		    <version>1.6.0.RELEASE</version>
+		    <version>1.7.5.RELEASE</version>
 		</dependency>
 		<dependency>
 		    <groupId>com.rabbitmq</groupId>
 		    <artifactId>amqp-client</artifactId>
-		    <version>3.6.6</version>
+		    <version>4.1.0</version>
 		</dependency>
-		
 		<!-- rabbitMQ-end   -->
-		
 
 		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core 
 			<dependency> <groupId>org.apache.logging.log4j</groupId> <artifactId>log4j-core</artifactId> 

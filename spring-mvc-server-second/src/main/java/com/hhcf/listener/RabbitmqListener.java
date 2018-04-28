@@ -14,7 +14,11 @@ public class RabbitmqListener implements MessageListener {
 
 	@Override
 	public void onMessage(Message message) {
-		System.out.println("消息消费者 = " + message.toString());
+		System.out.println("消息消费者 onMessage=" + message.toString());
+	}
+
+	public void projectAdd(Message message) {
+		System.out.println("消息消费者  projectAdd=" + message.toString());
 	}
 
 }

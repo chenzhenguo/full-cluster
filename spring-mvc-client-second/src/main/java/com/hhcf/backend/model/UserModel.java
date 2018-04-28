@@ -11,11 +11,20 @@ import java.util.List;
  * @date 2018年2月22日 下午3:29:35
  */
 public class UserModel implements Serializable {
-	private static final long serialVersionUID = -4704221318758733552L;
+	static final long serialVersionUID = -4704221318758733552L;
 	private Long id;
 	private String name;
+	private String pwd;
 	private int age;
 	private List<UserModel> friends;
+
+	public UserModel() {
+	}
+
+	public UserModel(String name, String pwd) {
+		this.name = name;
+		this.pwd = pwd;
+	}
 
 	public Long getId() {
 		return id;
@@ -47,6 +56,14 @@ public class UserModel implements Serializable {
 
 	public void setFriends(List<UserModel> friends) {
 		this.friends = friends;
+	}
+
+	public String getPwd() {
+		return pwd;
+	}
+
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
 	}
 
 }
