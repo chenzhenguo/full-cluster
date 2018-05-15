@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @Since:2018年5月15日 下午3:39:51
  * @see {@linkplain https://blog.csdn.net/qq315737546/article/details/54176560}
  */
-@Component("confirmCallBackListener")
+//@Component("confirmCallBackListener")
 public class ConfirmCallBackListener implements ConfirmCallback {
 
 	@Override

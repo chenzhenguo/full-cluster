@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @Since:2018年5月15日 下午3:41:25
  * @see {@linkplain https://blog.csdn.net/qq315737546/article/details/54176560}
  */
-@Component("returnCallBackListener")
+//@Component("returnCallBackListener")
 public class ReturnCallBackListener implements ReturnCallback {
 
 	@Override

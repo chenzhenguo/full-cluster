@@ -21,12 +21,15 @@
 	<context:property-placeholder location="classpath:mqconfig.properties" />
 	
 	<rabbit:connection-factory id="connectionFactory" username="${rabbitmq.username}" password="${rabbitmq.password}"
-    	host="${rabbitmq.host}" port="${rabbitmq.port}" virtual-host="${rabbitmq.vhost}" />
+    	host="${rabbitmq.host}" port="${rabbitmq.port}" virtual-host="${rabbitmq.vhost}" publisher-confirms="true" publisher-returns="true" />
     	
    	<rabbit:admin connection-factory="connectionFactory" />
 
+    <bean id="confirmCallBackListener" class="com.hhcf.system.listner.ConfirmCallBackListener"></bean>
+    <bean id="returnCallBackListener" class="com.hhcf.system.listner.ReturnCallBackListener"></bean>
 	<rabbit:template id="amqpTemplate" connection-factory="connectionFactory" confirm-callback="confirmCallBackListener"
 		return-callback="returnCallBackListener" mandatory="true" />
+
 
     <rabbit:queue id="com.mj.test" name="com.mj.test" durable="true" auto-delete="false" exclusive="false"/>
     
@@ -38,9 +41,11 @@
 
 
     <bean id="messageReceiver" class="com.hhcf.system.listner.MessageReceiver"></bean>
+    <bean id="receiveConfirmTestListener" class="com.hhcf.system.listner.ReceiveConfirmTestListener"></bean>
 
-    <rabbit:listener-container connection-factory="connectionFactory">
-        <rabbit:listener queues="com.mj.test" ref="messageReceiver"/>
+    <rabbit:listener-container connection-factory="connectionFactory" acknowledge="manual">
+        <!-- <rabbit:listener queues="com.mj.test" ref="messageReceiver"/> -->
+        <rabbit:listener queues="com.mj.test" ref="receiveConfirmTestListener"/>
     </rabbit:listener-container>
 
 
