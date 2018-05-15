@@ -17,5 +17,5 @@ public class MessageReceiver implements MessageListener {
 		// TODO Auto-generated method stub
 		System.out.println("Consumer侦听mq消息代码:" + message);
 	}
-
+	
 }

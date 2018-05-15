@@ -18,13 +18,26 @@
       http://www.springframework.org/schema/aop  
       http://www.springframework.org/schema/aop/spring-aop.xsd ">
       
-	<rabbit:connection-factory id="connectionFactory" username="guest" password="guest"
-    	host="localhost" port="5672" virtual-host="/"/>
+	<context:property-placeholder location="classpath:mqconfig.properties" />
+	
+	<rabbit:connection-factory id="connectionFactory" username="${rabbitmq.username}" password="${rabbitmq.password}"
+    	host="${rabbitmq.host}" port="${rabbitmq.port}" virtual-host="${rabbitmq.vhost}" />
+    	
+   	<rabbit:admin connection-factory="connectionFactory" />
+
+	<rabbit:template id="amqpTemplate" connection-factory="connectionFactory" confirm-callback="confirmCallBackListener"
+		return-callback="returnCallBackListener" mandatory="true" />
 
     <rabbit:queue id="com.mj.test" name="com.mj.test" durable="true" auto-delete="false" exclusive="false"/>
+    
+    <rabbit:direct-exchange name="product-topic" id="product-topic" >
+    	<rabbit:bindings>
+    		<rabbit:binding key="com.mj.test.key" queue="com.mj.test" />
+    	</rabbit:bindings>
+    </rabbit:direct-exchange>
 
 
-    <bean id="messageReceiver" class="com.mj.amq.MessageReceiver"></bean>
+    <bean id="messageReceiver" class="com.hhcf.system.listner.MessageReceiver"></bean>
 
     <rabbit:listener-container connection-factory="connectionFactory">
         <rabbit:listener queues="com.mj.test" ref="messageReceiver"/>

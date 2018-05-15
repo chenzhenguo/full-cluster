@@ -92,8 +92,7 @@
 	</bean>
 
 	<!-- 数据源集合 -->
-	<bean id="dataSource"
-		class="org.jeecgframework.core.extend.datasource.DynamicDataSource">
+	<bean id="dataSource" class="org.jeecgframework.core.extend.datasource.DynamicDataSource">
 		<property name="targetDataSources">
 			<map key-type="org.jeecgframework.core.extend.datasource.DataSourceType">
 				<entry key="dataSource_jeecg" value-ref="dataSource_jeecg" />
