@@ -2,7 +2,6 @@ package com.hhcf.system.listner;
 
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.core.RabbitTemplate.ReturnCallback;
-import org.springframework.stereotype.Component;
 
 /**
  * @Title: ReturnCallBackListener
@@ -16,8 +15,7 @@ public class ReturnCallBackListener implements ReturnCallback {
 
 	@Override
 	public void returnedMessage(Message message, int replyCode, String replyText, String exchange, String routingKey) {
-		// TODO Auto-generated method stub
-		System.out.println("return--message:" + new String(message.getBody()) + ",replyCode:" + replyCode
+		System.out.println("return--消息回调处理:" + new String(message.getBody()) + ",replyCode:" + replyCode
 				+ ",replyText:" + replyText + ",exchange:" + exchange + ",routingKey:" + routingKey);
 	}
 

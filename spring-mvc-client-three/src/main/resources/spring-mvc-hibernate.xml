@@ -22,9 +22,8 @@
 	</context:component-scan>
 	 -->
 	<!-- 真心帮api -->
-	<context:component-scan base-package="com.hhcf.backend.*">
-		<context:exclude-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
+	<context:component-scan base-package="com.hhcf.*">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 
 	<!-- 引入数据源属性文件 <context:property-placeholder location="classpath:dbconfig.properties" 

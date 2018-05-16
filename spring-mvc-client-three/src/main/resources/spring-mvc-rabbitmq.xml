@@ -32,19 +32,23 @@
 
 
     <rabbit:queue id="com.mj.test" name="com.mj.test" durable="true" auto-delete="false" exclusive="false"/>
+    <rabbit:queue id="com.mj.ztf" name="com.mj.ztf" durable="true" auto-delete="false" exclusive="false"/>
     
     <rabbit:direct-exchange name="product-topic" id="product-topic" >
     	<rabbit:bindings>
     		<rabbit:binding key="com.mj.test.key" queue="com.mj.test" />
+    		<rabbit:binding key="com.mj.ztf.key" queue="com.mj.ztf" />
     	</rabbit:bindings>
     </rabbit:direct-exchange>
 
 
+    <bean id="mQMsgListener" class="com.hhcf.system.listner.MQMsgListener"></bean>
     <bean id="messageReceiver" class="com.hhcf.system.listner.MessageReceiver"></bean>
     <bean id="receiveConfirmTestListener" class="com.hhcf.system.listner.ReceiveConfirmTestListener"></bean>
 
     <rabbit:listener-container connection-factory="connectionFactory" acknowledge="manual">
         <!-- <rabbit:listener queues="com.mj.test" ref="messageReceiver"/> -->
+        <rabbit:listener  queues="com.mj.ztf" ref="mQMsgListener" />
         <rabbit:listener queues="com.mj.test" ref="receiveConfirmTestListener"/>
     </rabbit:listener-container>
 

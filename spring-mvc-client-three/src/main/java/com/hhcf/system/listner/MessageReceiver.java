@@ -1,5 +1,7 @@
 package com.hhcf.system.listner;
 
+import java.util.Map;
+
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageListener;
 
@@ -14,8 +16,11 @@ public class MessageReceiver implements MessageListener {
 
 	@Override
 	public void onMessage(Message message) {
-		// TODO Auto-generated method stub
-		System.out.println("Consumer侦听mq消息代码:" + message);
+		System.out.println("MessageReceiver.onMessage:侦听mq消息代码:" + message);
 	}
-	
+
+	public void receiveMsg(Map<String, Object> message) {
+		System.out.println("MessageReceiver.receiveMsg侦听mq消息代码:" + message);
+	}
+
 }
