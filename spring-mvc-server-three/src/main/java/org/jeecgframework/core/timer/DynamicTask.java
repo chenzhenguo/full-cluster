@@ -13,7 +13,6 @@ import org.quartz.Job;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
-import org.quartz.Trigger;
 import org.quartz.TriggerKey;
 import org.quartz.impl.JobDetailImpl;
 import org.quartz.impl.triggers.CronTriggerImpl;
@@ -52,10 +51,19 @@ public class DynamicTask {
 			jobDetail.setName(task.getTaskId());
 			jobDetail.setGroup(Scheduler.DEFAULT_GROUP);
 			jobDetail.setJobClass((Class<? extends Job>) Class.forName(task.getClassName()));
-			CronTriggerImpl cronTrigger = new CronTriggerImpl("cron_" + task.getTaskId(), Scheduler.DEFAULT_GROUP,
-					jobDetail.getName(), Scheduler.DEFAULT_GROUP);
+			// CronTriggerImpl cronTrigger1 = new CronTriggerImpl("cron_" +
+			// task.getTaskId(), Scheduler.DEFAULT_GROUP,
+			// jobDetail.getName(), Scheduler.DEFAULT_GROUP);
+			CronTriggerImpl cronTrigger = new CronTriggerImpl();
+			cronTrigger.setName("cron_" + task.getTaskId());
+			cronTrigger.setGroup(Scheduler.DEFAULT_GROUP);
+			cronTrigger.setJobName(jobDetail.getName());
+			cronTrigger.setJobGroup(Scheduler.DEFAULT_GROUP);
 			cronTrigger.setCronExpression(task.getCronExpression());
 			// quartz 2.2结束
+
+			// Trigger tigger =
+			// TriggerBuilder.newTrigger().forJob(jobDetail).build();
 
 			// quartz 1.6开始
 			// JobDetail jobDetail = new JobDetail();
@@ -66,8 +74,10 @@ public class DynamicTask {
 			// Scheduler.DEFAULT_GROUP,
 			// jobDetail.getName(), Scheduler.DEFAULT_GROUP);
 			// cronTrigger.setCronExpression(task.getCronExpression());
-			// schedulerFactory.scheduleJob(jobDetail, cronTrigger);
 			// quartz 1.6结束
+
+			// schedulerFactory.scheduleJob(jobDetail, tigger);
+			schedulerFactory.scheduleJob(jobDetail, cronTrigger);
 			return true;
 		} catch (Exception e) {
 			logger.error("startTask Exception:" + e.getMessage(), e);
@@ -267,8 +277,15 @@ public class DynamicTask {
 						jobDetail.setName(task.getTaskId());
 						jobDetail.setGroup(Scheduler.DEFAULT_GROUP);
 						jobDetail.setJobClass((Class<? extends Job>) Class.forName(task.getClassName()));
-						CronTriggerImpl cronTrigger = new CronTriggerImpl("cron_" + task.getTaskId(),
-								Scheduler.DEFAULT_GROUP, jobDetail.getName(), Scheduler.DEFAULT_GROUP);
+						// CronTriggerImpl cronTrigger = new
+						// CronTriggerImpl("cron_" + task.getTaskId(),
+						// Scheduler.DEFAULT_GROUP, jobDetail.getName(),
+						// Scheduler.DEFAULT_GROUP);
+						CronTriggerImpl cronTrigger = new CronTriggerImpl();
+						cronTrigger.setName("cron_" + task.getTaskId());
+						cronTrigger.setGroup(Scheduler.DEFAULT_GROUP);
+						cronTrigger.setJobName(jobDetail.getName());
+						cronTrigger.setJobGroup(Scheduler.DEFAULT_GROUP);
 						cronTrigger.setCronExpression(task.getCronExpression());
 
 						// quartz 1.6

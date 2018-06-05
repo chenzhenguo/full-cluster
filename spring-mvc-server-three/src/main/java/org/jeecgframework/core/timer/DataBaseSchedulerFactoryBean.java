@@ -14,7 +14,7 @@ import com.hhcf.backend.service.TimeTaskService;
 /**
  * 
  * @Title: DataBaseSchedulerFactoryBean
- * @Description:读取数据库 然后判断是否启动任务
+ * @Description:调度工厂类，读取数据库 然后判断是否启动任务
  * @Author: zhaotf
  * @Since:2018年6月5日 上午11:22:12
  */
