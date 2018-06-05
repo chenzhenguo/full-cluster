@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
+	default-autowire="byName" default-lazy-init="false">
+
+	<!-- ======================== 调度工厂开始 ======================== -->
+    <bean id="quartzScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="false" autowire="no">
+        <!-- 设置持久化的数据源 -->
+        <property name="dataSource">
+            <ref bean="dataSource_jeecg" />
+        </property>
+        
+        <!-- 设置Quartz的属性 -->
+        <property name="quartzProperties">
+            <props>
+                <!-- 线程池配置 -->
+                <prop key="org.quartz.threadPool.class">org.quartz.simpl.SimpleThreadPool</prop>
+                <!-- 初始化线程数为20 -->
+                <prop key="org.quartz.threadPool.threadCount">20</prop>
+                <!-- 设置作业的优先级是5 -->
+                <prop key="org.quartz.threadPool.threadPriority">5</prop>
+                <!-- 初始化线程数为20 -->
+                <prop key="org.quartz.jobStore.misfireThreshold">60000</prop>
+                
+                <!-- JobStore 配置，通过数据库存储最终调度程序的配置 -->
+                <prop key="org.quartz.jobStore.class">org.quartz.impl.jdbcjobstore.JobStoreTX</prop>
+                <prop key="org.quartz.jobStore.driverDelegateClass">org.quartz.impl.jdbcjobstore.StdJDBCDelegate</prop>
+                
+                <!-- 数据表名的前缀设置 -->
+                <prop key="org.quartz.jobStore.tablePrefix">QRTZ_</prop>
+            </props>
+        </property>
+        
+        <!-- 设置应用初始化之后，延迟30秒再启动scheduler -->
+        <property name="startupDelay" value="30" />
+        
+        <property name="applicationContextSchedulerContextKey" value="applicationContext" />
+        
+        <!-- 设置定时任务随web启动 -->
+        <property name="autoStartup" value="true" />
+        
+        <property name="triggers">
+            <list>
+                <ref bean="definedInXMLcronTrigger"/>
+            </list>
+        </property>
+    </bean>
+    <!-- ======================== 调度工厂结束 ======================== -->
+    
+    <!-- ======================== 定时任务1 开始 ======================== -->
+    <bean id="definedInXMLJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <!-- 必填项：在此处定义job detail -->
+        <property name="jobClass" value="org.jeecgframework.job.detail.DefinedInXMLJobDetail" />
+        <!-- 必填项：在此处定义job name -->
+        <property name="name" value="jobName1"></property>
+        <!-- 必填项：在此处定义job group name -->
+        <property name="group" value="jobGroupName1"></property>
+        <!-- 选填项：设置该job是持久性的 -->
+        <property name="durability" value="true" />
+        <!-- 选填项：设置该job是中断后可恢复的 -->
+        <property name="requestsRecovery" value="true" />
+    </bean>
+    
+    <bean id="definedInXMLcronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!-- 必填项：在此处定义trigger name -->
+        <property name="name" value="triggerName1" />
+        <!-- 必填项：在此处定义trigger group name -->
+        <property name="group" value="triggerGroupName1" />
+        <property name="jobDetail" ref="definedInXMLJobDetail" />
+        <!-- 必填项：在此处定义定时任务时间 -->
+        <property name="cronExpression" value="0/10 * * * * ? " />
+        <!-- 选填项：在此处定义市区 -->
+        <property name="timeZone" ref="timeZone" />
+        <property name="misfireInstruction" value="1" />
+    </bean>
+    <!-- ======================== 定时任务1 结束 ======================== -->
+    
+    <!-- 时区 -->
+    <bean id="timeZone" class="java.util.TimeZone" factory-method="getTimeZone">
+        <constructor-arg value="GMT+08:00" />
+    </bean>
+    	
+    <bean id="quartzUtil" class="org.jeecgframework.util.QuartzUtil" />
+
+</beans>
