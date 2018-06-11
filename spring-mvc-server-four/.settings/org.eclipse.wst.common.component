@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="spring-mvc-server-four">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="elastic-job-lite-core-2.1.5.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/elastic-job-lite-core/elastic-job-lite-core">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="elastic-job-common-core-2.1.5.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/elastic-job-common-core/elastic-job-common-core">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="elastic-job-lite-spring-2.1.5.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/elastic-job-lite-spring/elastic-job-lite-spring">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="elastic-job-lite-lifecycle-2.1.5.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/elastic-job-lite-lifecycle/elastic-job-lite-lifecycle">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="elastic-job-common-restful-2.1.5.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/elastic-job-common-restful/elastic-job-common-restful">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="spring-mvc-server-four"/>
+        <property name="java-output-path" value="/spring-mvc-server-four/target/classes"/>
+    </wb-module>
+</project-modules>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd">
+	<!-- 自动扫描dao和service包(自动注入) -->
+	<!-- 加载service,此时要排除要controller,因为controller已经spring-mvc中加载过了 -->
+	<context:component-scan base-package="com.hhcf.*">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+	<!-- 引入jdbc配置文件 -->
+	<context:property-placeholder location="classpath:dbconfig.properties" />
+	<!-- 
+	<bean id="propertyConfigurer1"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="order" value="1" />
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="location"
+			value="file:/etc/tomcat5/backend/dbconfig-bus.properties" />
+	</bean>
+	<bean id="propertyConfigurer2"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="order" value="2" />
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="location" value="classpath:dbconfig.properties" />
+	</bean>
+	 -->
+
+
+	<!-- 数据源配置 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close" p:driverClassName="${jdbc.driver}" p:url="${jdbc.url}"
+		p:username="${jdbc.username}" p:password="${jdbc.password}">
+
+		<!-- 初始化连接大小 -->
+		<property name="initialSize" value="1"></property>
+		<!-- 连接池最大数量 -->
+		<property name="maxActive" value="30"></property>
+		<!-- 连接池最大空闲 -->
+		<property name="maxIdle" value="1"></property>
+		<!-- 连接池最小空闲 -->
+		<property name="minIdle" value="20"></property>
+		<!-- 获取连接最大等待时间 -->
+		<property name="maxWait" value="1000"></property>
+
+		<!-- 连接属性 -->
+		<property name="connectionProperties">
+			<value>clientEncoding=UTF-8</value>
+		</property>
+
+	</bean>
+
+	<!-- mybatis文件配置，扫描所有mapper文件 -->
+	<!-- configLocation为mybatis属性 mapperLocations为所有mapper <bean id="sqlSessionFactory" 
+		class="org.mybatis.spring.SqlSessionFactoryBean" p:dataSource-ref="dataSource" 
+		p:configLocation="classpath:mybatis-config.xml" p:mapperLocations="classpath:com/hhcf/learn/dao/mapping/*Mapper.xml" 
+		/> -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="mapperLocations" value="classpath:com/hhcf/learn/mapper/*Mapper.xml"></property>
+	</bean>
+
+	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.hhcf.learn.dao" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+	</bean>
+
+	<!-- 定义SqlSessionTemplate组件来整合spring和mybatis -->
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+		<constructor-arg index="1" value="BATCH" />
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- 使用annotation注解方式配置事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+</beans>
+
+
+
+
+
+
