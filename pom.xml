@@ -31,5 +31,6 @@
     <module>spring-mvc-hadoop</module>
     <module>spring-mvc-client-three</module>
     <module>spring-mvc-server-three</module>
+    <module>spring-mvc-server-four</module>
   </modules>
 </project>
