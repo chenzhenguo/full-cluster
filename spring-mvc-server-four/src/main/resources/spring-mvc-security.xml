@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:sec="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+	
+	<!-- 需要登陆能够访问的路径 -->  
+	<sec:http auto-config="true" >
+		<sec:intercept-url pattern="/home.do" access="hase('ROLE_ADMIN')"  />
+		<sec:intercept-url pattern="/dba**" access="hasAnyRole('ROLE_ADMIN','ROLE_DBA')" />
+		 <!--制定自定义的登录路径为/login，登录后默认跳转/welcome-->  
+        <sec:form-login login-page="/login" default-target-url="/welcome" />  
+	</sec:http>
+	
+	<sec:authentication-manager>
+		<sec:authentication-provider>
+			<sec:user-service>
+				<sec:user name="yiibai" password="123456" authorities="ROLE_ADMIN"/>	
+				<sec:user name="admin" password="123456" authorities="ROLE_ADMIN" />
+				<sec:user name="dba" password="123456" authorities="ROLE_DBA" />	
+			</sec:user-service>
+		</sec:authentication-provider>
+	</sec:authentication-manager>
+
+	<!-- 
+	<sec:authentication-manager>
+		<sec:authentication-provider ref="authenticationProvider"/>
+	</sec:authentication-manager>
+	
+	<beans:bean id="authenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+	    <beans:property name="userDetailsService" ref="userDetailService" /> 
+	</beans:bean>
+	
+	<beans:bean id="userDetailService" class="com.hhcf.learn.service.impl.UserServiceImpl" />
+	 -->
+	
+	 
+</beans:beans>
+
