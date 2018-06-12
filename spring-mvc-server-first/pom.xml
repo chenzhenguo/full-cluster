@@ -18,6 +18,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
 		<spring.version>4.3.10.RELEASE</spring.version>
+		<spring.security.version>4.2.3.RELEASE</spring.security.version>
 		<elasticsearch.version>6.1.1</elasticsearch.version>
 		<jest.searchbox.version>5.3.2</jest.searchbox.version>
 		<slf4j.version>1.5.10</slf4j.version>
@@ -108,16 +109,50 @@
 		<easypoi.version>2.1.1</easypoi.version>
 	</properties>
 
+	<!-- 设定主仓库，按设定顺序进行查找  -->
+	<repositories>
+		<repository>
+            <id>mvn</id>
+            <name>mvn Repository</name>
+            <url>http://mvnrepository.com/</url>
+            <snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+        </repository>
+		<repository>
+            <id>aliyun</id>
+            <name>aliyun Repository</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+            <snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+        </repository>
+		<repository>
+            <id>jeecg</id>
+            <name>jeecg Repository</name>
+            <url>http://maven.jeecg.org/nexus/content/repositories/jeecg</url>
+            <snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+        </repository>
+        <repository>
+            <id>jeecg-snapshots</id>
+            <name>jeecg-snapshots Repository</name>
+            <url>http://maven.jeecg.org/nexus/content/repositories/snapshots</url>
+            <snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+        </repository>
+    </repositories>
+    
 
 	<dependencies>
-
 		<!-- https://mvnrepository.com/artifact/com.alibaba.rocketmq/rocketmq-client -->
 		<dependency>
 			<groupId>com.alibaba.rocketmq</groupId>
 			<artifactId>rocketmq-client</artifactId>
 			<version>3.5.9</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.alibaba.rocketmq/rocketmq-common -->
 		<dependency>
 			<groupId>com.alibaba.rocketmq</groupId>
 			<artifactId>rocketmq-common</artifactId>
@@ -259,6 +294,23 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>${mybatis-spring.version}</version>
 		</dependency>
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-core</artifactId>
+		    <version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-entitymanager</artifactId>
+		    <version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-validator</artifactId>
+		    <version>5.1.3.Final</version>
+		</dependency>
+		
+		
 
 		<!-- 数据库相关依赖包 -->
 		<dependency>
@@ -292,29 +344,24 @@
 			<version>${jtds.version}</version>
 			<scope>runtime</scope>
 		</dependency>
-
-		<!-- WEB begin -->
-		<!-- web依赖包 -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jsp-api</artifactId>
-			<version>2.0</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-		</dependency>
-		<!-- WEB end -->
-
 		<!-- 工具包 -->
+		
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
+			<version>2.3.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>jstl</artifactId>
+		    <version>1.2</version>
+		</dependency>
+		
 		<!-- JSON begin -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
@@ -529,6 +576,42 @@
 			<dependency> <groupId>org.apache.logging.log4j</groupId> <artifactId>log4j-core</artifactId> 
 			<version>2.8.2</version> </dependency> -->
 
+
+		<!-- elastic-job-lite-start -->
+		<dependency>
+		    <groupId>com.dangdang</groupId>
+		    <artifactId>elastic-job-lite-core</artifactId>
+		    <version>2.1.5</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.dangdang</groupId>
+		    <artifactId>elastic-job-lite-spring</artifactId>
+		    <version>2.1.5</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.dangdang</groupId>
+		    <artifactId>elastic-job-lite-lifecycle</artifactId>
+		    <version>2.1.5</version>
+		</dependency>
+		<!-- elastic-job-lite-end   -->
+
+		<!-- spring-security-start -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-core</artifactId>
+		    <version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-web</artifactId>
+		    <version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-config</artifactId>
+		    <version>${spring.security.version}</version>
+		</dependency>
+		<!-- spring-security-end   -->
 
 		<dependency>
 			<groupId>junit</groupId>
