@@ -7,12 +7,19 @@
 	
 	<!-- 需要登陆能够访问的路径 -->  
 	<sec:http auto-config="true" >
-		<sec:intercept-url pattern="/home.do" access="hase('ROLE_ADMIN')"  />
+		<sec:intercept-url pattern="/home.do" access="hasRole('ROLE_ADMIN')"  />
+		<sec:intercept-url pattern="/hello.do" access="hasRole('ROLE_ADMIN')"  />
 		<sec:intercept-url pattern="/dba**" access="hasAnyRole('ROLE_ADMIN','ROLE_DBA')" />
-		 <!--制定自定义的登录路径为/login，登录后默认跳转/welcome-->  
-        <sec:form-login login-page="/login" default-target-url="/welcome" />  
+		 <!--制定自定义的登录路径为/login，登录后默认跳转/welcome		 -->  
+        <sec:form-login login-page="/login.do" default-target-url="/welcome.do" authentication-failure-url="/login.do?error=error"
+        	authentication-success-handler-ref="customSuccessHandler" />  
 	</sec:http>
 	
+	<sec:authentication-manager>
+		<sec:authentication-provider user-service-ref="userDetailService" />
+	</sec:authentication-manager>
+	
+	<!-- 
 	<sec:authentication-manager>
 		<sec:authentication-provider>
 			<sec:user-service>
@@ -22,8 +29,8 @@
 			</sec:user-service>
 		</sec:authentication-provider>
 	</sec:authentication-manager>
-
-	<!-- 
+	 -->
+	 <!-- 
 	<sec:authentication-manager>
 		<sec:authentication-provider ref="authenticationProvider"/>
 	</sec:authentication-manager>
@@ -31,10 +38,11 @@
 	<beans:bean id="authenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
 	    <beans:property name="userDetailsService" ref="userDetailService" /> 
 	</beans:bean>
+	  -->
 	
 	<beans:bean id="userDetailService" class="com.hhcf.learn.service.impl.UserServiceImpl" />
-	 -->
-	
+
+	<beans:bean id="customSuccessHandler" class="com.hhcf.system.other.CustomSuccessHandler"></beans:bean>
 	 
 </beans:beans>
 

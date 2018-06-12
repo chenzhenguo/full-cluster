@@ -5,11 +5,14 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,9 +27,11 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping
 public class LoginController {
-
+	private Logger logger = LoggerFactory.getLogger(LoginController.class);
+	
 	/**
-	 * http://localhost:8180/spring-mvc-server-four/dba.do
+	 * http://localhost:8180/spring-mvc-server-four/dbaaa.do
+	 * 
 	 * @param model
 	 * @return String
 	 */
@@ -44,7 +49,7 @@ public class LoginController {
 	 */
 	@RequestMapping("/hello")
 	public ModelAndView hello(ModelAndView model) {
-		System.out.println("hello:aaaaaaaaaaaaaaaaa");
+		logger.info("hello:aaaaaaaaaaaaaaaaa");
 		model.addObject("title", "Spring Security Custom Login Form");
 		model.addObject("message", "This is welcome page!");
 		model.setViewName("hello");
@@ -58,7 +63,7 @@ public class LoginController {
 	 */
 	@RequestMapping("/admin")
 	public String admin(Model model) {
-		System.out.println("admin:aaaaaaaaaaaaaaaaa");
+		logger.info("admin:aaaaaaaaaaaaaaaaa");
 		model.addAttribute("title", "Spring Security Custom Login Form");
 		model.addAttribute("message", "This is protected page!");
 		return "admin";
@@ -70,10 +75,17 @@ public class LoginController {
 	 * @return String
 	 */
 	@RequestMapping("/login")
-	public String login(Model model) {
-		System.out.println("login:aaaaaaaaaaaaaaaaa");
-		model.addAttribute("title", "Spring Security Hello World");
-		model.addAttribute("message", "This is protected page!");
+	public String login(Model model, @RequestParam(value = "error", required = false) String error,
+			@RequestParam(value = "logout", required = false) String logout) {
+		logger.info("login:aaaaaaaaaaaaaaaaa");
+		if (error != null) {
+			model.addAttribute("error", "Invalid username and password!");
+			return "error";
+		}
+		if (logout != null) {
+			model.addAttribute("msg", "You've been logged out successfully.");
+			return "logout";
+		}
 		return "login";
 	}
 
@@ -84,7 +96,7 @@ public class LoginController {
 	 */
 	@RequestMapping("/home")
 	public String home(Model model) {
-		System.out.println("home:aaaaaaaaaaaaaaaaa");
+		logger.info("home:aaaaaaaaaaaaaaaaa");
 		model.addAttribute("title", "Spring Security Hello World");
 		model.addAttribute("message", "This is protected page!");
 		return "home";
@@ -98,14 +110,13 @@ public class LoginController {
 	 */
 	@RequestMapping("/welcome")
 	public String welcome(Model model) {
-		System.out.println("welcome:aaaaaaaaaaaaaaaaa");
+		logger.info("welcome:aaaaaaaaaaaaaaaaa");
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = principal instanceof String ? (String) principal
 				: (principal instanceof UserDetails ? ((UserDetails) principal).getUsername() : "");
 		model.addAttribute("username", username);
 		model.addAttribute("title", "Spring Security Hello World");
 		model.addAttribute("message", "This is protected page!");
-		System.out.println("welcome111111111:aaaaaaaaaaaaaaaaa");
 		return "welcome";
 	}
 
@@ -118,7 +129,7 @@ public class LoginController {
 	@RequestMapping("/loginSucc")
 	@ResponseBody
 	public Map<String, Object> loginSucc(HttpServletRequest request) {
-		System.out.println("登录成功!");
+		logger.info("登录成功!");
 		Map<String, Object> result = new HashMap<String, Object>();
 		return result;
 	}
@@ -132,7 +143,7 @@ public class LoginController {
 	@RequestMapping("/loginFail")
 	@ResponseBody
 	public Map<String, Object> loginFail(HttpServletRequest request) {
-		System.out.println("登录失败!");
+		logger.info("登录失败!");
 		Map<String, Object> result = new HashMap<String, Object>();
 		return result;
 	}
