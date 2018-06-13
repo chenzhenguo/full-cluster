@@ -26,7 +26,7 @@ import com.alibaba.fastjson.JSON;
  * @Since:2018年6月13日 下午1:53:04
  * @see {@linkplain https://www.yiibai.com/spring-security/spring-security-4-hibernate-role-based-login-example.html}
  */
-// @Component("customSuccessHandler")
+@Component("customSuccessHandler")
 public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 	private Logger logger = LoggerFactory.getLogger(CustomSuccessHandler.class);
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();

@@ -6,6 +6,7 @@
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 	
 	<sec:http auto-config="true" >
+		<sec:csrf disabled="true"/>
 		<sec:intercept-url pattern="/home.do" access="hasRole('ROLE_ADMIN')"  />
 	<!-- 需要登陆能够访问的路径 
 		<sec:intercept-url pattern="/hello.do" access="hasRole('ROLE_ADMIN')"  />

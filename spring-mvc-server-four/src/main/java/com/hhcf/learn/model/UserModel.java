@@ -20,7 +20,7 @@ import com.hhcf.system.other.State;
 public class UserModel implements UserDetails, Serializable {
 	private static final long serialVersionUID = 1L;
 	private long id;
-	private String userName;
+	private String username;
 	private String password;
 	private String firstName;
 	private String lastName;
@@ -41,7 +41,7 @@ public class UserModel implements UserDetails, Serializable {
 
 	@Override
 	public String getUsername() {
-		return this.userName;
+		return this.username;
 	}
 
 	@Override
@@ -64,12 +64,8 @@ public class UserModel implements UserDetails, Serializable {
 		return true;
 	}
 
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public static long getSerialversionuid() {

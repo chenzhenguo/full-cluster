@@ -3,12 +3,31 @@
 <mapper namespace="com.hhcf.learn.dao.UserMapper">
 
 	<resultMap id="BaseResultMap" type="com.hhcf.learn.model.UserModel">
-		<result column="username" property="userName" jdbcType="VARCHAR" />
+		<result column="id" property="id" jdbcType="BIGINT" />
+		<result column="sso_id" property="username" jdbcType="VARCHAR" />
 		<result column="password" property="password" jdbcType="VARCHAR" />
 	</resultMap>
 
 	<select id="findUserByUserName" parameterType="string" resultMap="BaseResultMap">
+		select t.* from APP_USER t where t.sso_id = #{username}
+		<!-- 
 		select * from t_s_base_user where username = #{userName}
+		 -->
+	</select>
+	
+	<insert id="save" parameterType="com.hhcf.learn.model.UserModel" useGeneratedKeys="true" keyProperty="id" >  
+    	INSERT INTO APP_USER(sso_id,password,first_name,last_name,email,state)  
+                      VALUES(#{username},#{password},#{firstName},  
+        					 #{lastName},#{email},#{state}
+        					 )  
+	</insert>  
+	
+	<select id="findById" parameterType="long" resultMap="BaseResultMap">
+		select * from APP_USER where id = #{id}
+	</select>
+	
+	<select id="findByUserName" parameterType="String" resultMap="BaseResultMap">
+		select * from APP_USER where username = #{username}
 	</select>
 
 </mapper>
