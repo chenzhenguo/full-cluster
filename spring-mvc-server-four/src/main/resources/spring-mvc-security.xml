@@ -12,6 +12,7 @@
 	-->  
 		<sec:intercept-url pattern="/dba**" access="hasAnyRole('ROLE_ADMIN','ROLE_DBA')" />
         <sec:form-login login-page="/login.do" default-target-url="/welcome.do" authentication-failure-url="/login.do?error=error"
+        	authentication-success-handler-ref="customSuccessHandler"
         	/>  
 	</sec:http>
 	
@@ -40,7 +41,7 @@
 	</beans:bean>
 	  -->
 	<beans:bean id="userDetailService" class="com.hhcf.learn.service.impl.UserServiceImpl" />
-	
+	<beans:bean id="customSuccessHandler" class="com.hhcf.system.other.CustomSuccessHandler" />
 
 	
 </beans:beans>
