@@ -50,8 +50,7 @@ public class UserServiceImpl implements UserService {
 			throw new UsernameNotFoundException("用户名或密码不正确!");
 		}
 		logger.info("username:" + userModel.getUsername() + ",password:" + userModel.getPassword());
-//		User user = new User(userModel.getUsername(), userModel.getPassword(), getGrantedAuthorities(userModel));
-		User user = new User(userModel.getUsername(), "123456", getGrantedAuthorities(userModel));
+		User user = new User(userModel.getUsername(), userModel.getPassword(), getGrantedAuthorities(userModel));
 		// User user = new User("admin", "123456",
 		// getGrantedAuthorities(userModel));
 		logger.info("loadUserByUsername:" + username + "," + JSON.toJSONString(user));

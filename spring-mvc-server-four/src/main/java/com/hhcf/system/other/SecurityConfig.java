@@ -53,23 +53,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// logger.info("启动时，加载所有用户角色，权限configureGlobal");
 	// }
 
-//	/**
-//	 * 设置页面权限
-//	 */
-//	@Override
-//	protected void configure(HttpSecurity http) throws Exception {
-//		// http.authorizeRequests()//
-//		// .antMatchers("/home.do").access("hasRole('ROLE_ADMIN')")// 主页
-//		// .antMatchers("/dba**").access("hasAnyRole('ROLE_ADMIN','ROLE_DBA')")//
-//		// 其它页
-//		// .and()//
-//		// .formLogin().loginPage("/login").defaultSuccessUrl("/welcome.do")
-//		// .loginProcessingUrl("/welcome.do").successForwardUrl("/welcome.do").failureUrl("/login.do?error=error")//
-//		// 登录页
-//		// .and().exceptionHandling().accessDeniedPage("/basic/exception.do");
-//		logger.info("设置页面权限configure");
-//	}
+	// /**
+	// * 设置页面权限
+	// */
+	// @Override
+	// protected void configure(HttpSecurity http) throws Exception {
+	// // http.authorizeRequests()//
+	// // .antMatchers("/home.do").access("hasRole('ROLE_ADMIN')")// 主页
+	// // .antMatchers("/dba**").access("hasAnyRole('ROLE_ADMIN','ROLE_DBA')")//
+	// // 其它页
+	// // .and()//
+	// // .formLogin().loginPage("/login").defaultSuccessUrl("/welcome.do")
+	// //
+	// .loginProcessingUrl("/welcome.do").successForwardUrl("/welcome.do").failureUrl("/login.do?error=error")//
+	// // 登录页
+	// // .and().exceptionHandling().accessDeniedPage("/basic/exception.do");
+	// logger.info("设置页面权限configure");
+	// }
 
+	/**
+	 * 有xml配置文件时，JAV代码不起作用
+	 * 
+	 * @param auth
+	 * @throws Exception
+	 *             void
+	 */
 	@Autowired
 	public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService);
@@ -89,5 +97,34 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+
+	// public static void main(String[] args) {
+	// BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	//// String hashedPassword = passwordEncoder.encode(password);
+	// System.out.println("aaa:"+passwordEncoder.matches("123456",
+	// "$2a$10$QLCzyQanmeIws6jmuGanV.mXigJaWq3RWLEB3FNMCFixIC.YTNiDG"));
+	// System.out.println("aaa:"+passwordEncoder.matches("123456",
+	// "$2a$10$wGwpKpbbgHZaNLlNvsBJBO5w6z7/IXeBGzMBk3nR2SnlUPaChSjNm"));
+	// System.out.println("aaa:"+passwordEncoder.matches("123456",
+	// "$2a$10$wGwpKpbbgHZaNLlNvsBJBO5w6z7/IXeBGzMBk3nR2SnlUPaaaaaNm"));
+	//// int t = 0;
+	//// String password = "123456";
+	//// System.out.println(password + " -> ");
+	//// for (t = 1; t <= 10; t++) {
+	//// BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	//// String hashedPassword = passwordEncoder.encode(password);
+	//// System.out.println("aaa:"+passwordEncoder.matches(password,
+	// hashedPassword));
+	//// System.out.println(hashedPassword);
+	//// }
+	////
+	//// password = "MIKE123";
+	//// System.out.println(password + " -> ");
+	//// for (t = 1; t <= 10; t++) {
+	//// BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	//// String hashedPassword = passwordEncoder.encode(password);
+	//// System.out.println(hashedPassword);
+	//// }
+	// }
 
 }

@@ -20,6 +20,9 @@
 	<!-- 
 	<sec:authentication-manager>
 		<sec:authentication-provider user-service-ref="userDetailService" />
+		<sec:authentication-provider >
+			<sec:password-encoder ref="bCryptPasswordEncoder" />
+		</sec:authentication-provider>
 	</sec:authentication-manager>
 	
 	<sec:authentication-manager>
@@ -32,18 +35,18 @@
 		</sec:authentication-provider>
 	</sec:authentication-manager>
 	 -->
-	 <!-- 
 	<sec:authentication-manager>
 		<sec:authentication-provider ref="authenticationProvider"/>
 	</sec:authentication-manager>
 	
 	<beans:bean id="authenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
 	    <beans:property name="userDetailsService" ref="userDetailService" /> 
+	    <beans:property name="passwordEncoder" ref="bCryptPasswordEncoder" /> 
 	</beans:bean>
 	<beans:bean id="userDetailService" class="com.hhcf.learn.service.impl.UserServiceImpl" />
-	  -->
-	<beans:bean id="customSuccessHandler" class="com.hhcf.system.other.CustomSuccessHandler" />
+	<beans:bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
+	<beans:bean id="customSuccessHandler" class="com.hhcf.system.other.CustomSuccessHandler" />
 	
 </beans:beans>
 
