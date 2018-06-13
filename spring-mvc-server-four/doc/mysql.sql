@@ -28,6 +28,14 @@ CREATE TABLE APP_USER_USER_PROFILE (
     CONSTRAINT FK_USER_PROFILE FOREIGN KEY (user_profile_id) REFERENCES USER_PROFILE (id)
 );
 
+CREATE TABLE persistent_logins (
+    username VARCHAR(64) NOT NULL,
+    series VARCHAR(64) NOT NULL,
+    token VARCHAR(64) NOT NULL,
+    last_used TIMESTAMP NOT NULL,
+    PRIMARY KEY (series)
+); 
+
 /* Populate USER_PROFILE Table */
 INSERT INTO USER_PROFILE(type)
 VALUES ('USER');
@@ -78,3 +86,5 @@ INSERT INTO APP_USER_USER_PROFILE (user_id, user_profile_id)
 INSERT INTO APP_USER_USER_PROFILE (user_id, user_profile_id)
   SELECT user.id, profile.id FROM APP_USER user, USER_PROFILE profile  
   where user.sso_id='kenny' and profile.type='DBA';
+  
+  
