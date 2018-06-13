@@ -14,9 +14,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
 import com.hhcf.learn.controller.LoginController;
 import com.hhcf.learn.dao.UserMapper;
 import com.hhcf.learn.model.UserModel;
+import com.hhcf.learn.model.UserProfileModel;
 import com.hhcf.learn.service.UserService;
 
 /**
@@ -35,7 +37,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		logger.info("loadUserByUsername:" + username);
 		UserModel userModel = null;
 		try {
 			userModel = userMapper.findUserByUserName(username);
@@ -46,20 +47,25 @@ public class UserServiceImpl implements UserService {
 			throw new UsernameNotFoundException("用户名或密码不正确!");
 		}
 		logger.info("username:" + userModel.getUsername() + ",password:" + userModel.getPassword());
-		User user = new User(userModel.getUsername(),userModel.getPassword(),getGrantedAuthorities(userModel));
-		return userModel;
+		// User user = new User(userModel.getUsername(),
+		// userModel.getPassword(), getGrantedAuthorities(userModel));
+		User user = new User("admin", "123456", getGrantedAuthorities(userModel));
+		logger.info("loadUserByUsername:" + username + "," + JSON.toJSONString(user));
+		return user;
 	}
 
-	
-	private List<GrantedAuthority> getGrantedAuthorities(UserModel user){
+	private List<GrantedAuthority> getGrantedAuthorities(UserModel user) {
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		
-		for(UserProfile userProfile : user.getUserProfiles()){
-			System.out.println("UserProfile : "+userProfile);
-			authorities.add(new SimpleGrantedAuthority("ROLE_"+userProfile.getType()));
-		}
-		System.out.print("authorities :"+authorities);
+
+		// for (UserProfileModel userProfile : user.getUserProfiles()) {
+		// System.out.println("UserProfile : " + userProfile);
+		// authorities.add(new SimpleGrantedAuthority("ROLE_" +
+		// userProfile.getType()));
+		// }
+		// authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+		authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+		logger.info("getGrantedAuthorities:" + authorities);
 		return authorities;
 	}
-	
+
 }
