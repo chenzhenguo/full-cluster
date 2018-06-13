@@ -30,8 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	@Qualifier("userDetailService")
 	private UserDetailsService userDetailsService;
-	@Autowired
-	private CustomSuccessHandler customSuccessHandler;
+//	@Autowired
+//	private CustomSuccessHandler customSuccessHandler;
 
 //	/**
 //	 * 启动时，加载所有用户角色，权限

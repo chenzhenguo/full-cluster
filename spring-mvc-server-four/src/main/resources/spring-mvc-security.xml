@@ -16,10 +16,10 @@
         	/>  
 	</sec:http>
 	
+	<!-- 
 	<sec:authentication-manager>
 		<sec:authentication-provider user-service-ref="userDetailService" />
 	</sec:authentication-manager>
-	<!-- 
 	
 	<sec:authentication-manager>
 		<sec:authentication-provider>
@@ -39,8 +39,8 @@
 	<beans:bean id="authenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
 	    <beans:property name="userDetailsService" ref="userDetailService" /> 
 	</beans:bean>
-	  -->
 	<beans:bean id="userDetailService" class="com.hhcf.learn.service.impl.UserServiceImpl" />
+	  -->
 	<beans:bean id="customSuccessHandler" class="com.hhcf.system.other.CustomSuccessHandler" />
 
 	
