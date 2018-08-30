@@ -613,6 +613,22 @@
 		</dependency>
 		<!-- spring-security-end   -->
 
+		<!-- https://mvnrepository.com/artifact/org.apache.storm/storm-core -->
+		<dependency>
+		    <groupId>org.apache.storm</groupId>
+		    <artifactId>storm-core</artifactId>
+		    <version>1.0.3</version>
+		    <scope>provided</scope>
+		    <exclusions>
+		    	<exclusion>
+		    		<groupId>org.slf4j</groupId>
+		    		<artifactId>log4j-over-slf4j</artifactId>
+		    	</exclusion>
+		    </exclusions>
+		</dependency>
+
+
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
