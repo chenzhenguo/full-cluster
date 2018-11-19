@@ -68,22 +68,22 @@ public class RoadRealTimeAnalyze {
 					topics.add(kafkaTopic);
 				}
 				
-				/**
-				 * SparkStreaming和kafka   receiver direct
-				 */
-				JavaPairInputDStream<String, String> carRealTimeLogDStream = KafkaUtils.createDirectStream(jssc,topics,kafkaParams);
-				
-				/**
-				 * 实时计算道路的拥堵情况
-				 */
- 				realTimeCalculateRoadState(carRealTimeLogDStream);
+//				/**
+//				 * SparkStreaming和kafka   receiver direct
+//				 */
+//				JavaPairInputDStream<String, String> carRealTimeLogDStream = KafkaUtils.createDirectStream(jssc,topics,kafkaParams);
+//				
+//				/**
+//				 * 实时计算道路的拥堵情况
+//				 */
+// 				realTimeCalculateRoadState(carRealTimeLogDStream);
 				
 //				String path = "C:\\Users\\root\\Desktop\\blackList.txt";
 //				
 // 				controlCar(path,carRealTimeLogDStream); 
 				
 				jssc.start();
-				jssc.awaitTermination();
+//				jssc.awaitTermination();
 	}
 
 	private static void controlCar(final String path, JavaPairInputDStream<String, String> carRealTimeLogDStream) {
